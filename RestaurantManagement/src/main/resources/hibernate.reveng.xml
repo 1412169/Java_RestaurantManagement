@@ -41,17 +41,17 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="foodmanagement"/>
-  <table-filter match-name="customer"/>
-  <table-filter match-name="dish_directory"/>
+  <table-filter match-name="branch_table"/>
+  <table-filter match-name="branch_directory"/>
+  <table-filter match-name="menu_detail"/>
   <table-filter match-name="menu"/>
   <table-filter match-name="branch"/>
-  <table-filter match-name="branch_directory"/>
-  <table-filter match-name="order_bill"/>
-  <table-filter match-name="menu_detail"/>
-  <table-filter match-name="unexpected_cost"/>
-  <table-filter match-name="branch_table"/>
-  <table-filter match-name="employee"/>
-  <table-filter match-name="order_detail"/>
   <table-filter match-name="table_detail"/>
+  <table-filter match-name="employee"/>
   <table-filter match-name="dish"/>
+  <table-filter match-name="customer"/>
+  <table-filter match-name="order_detail"/>
+  <table-filter match-name="order_bill"/>
+  <table-filter match-name="unexpected_cost"/>
+  <table-filter match-name="dish_directory"/>
 </hibernate-reverse-engineering>

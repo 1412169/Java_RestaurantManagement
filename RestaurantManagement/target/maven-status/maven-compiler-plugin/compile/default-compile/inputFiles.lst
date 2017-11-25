@@ -1,6 +1,7 @@
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\TableDetail.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\DishDirectory.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\controllers\accountController.java
+C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\DAO\branchDAO.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\UnexpectedCost.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\DAO\HibernateUtil.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\controllers\reportManagementController.java
@@ -14,7 +15,9 @@ C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\BranchTable.jav
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\Menu.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\BranchDirectory.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\controllers\foodManagementController.java
+C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\DAO\branchDirectoryDAO.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\Branch.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\OrderDetail.java
+C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\DAO\dishDAO.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\Employee.java
 C:\Users\hotha\Desktop\RestaurantManagement\src\main\java\Entity\MenuDetail.java

@@ -29,7 +29,7 @@
                         <a href="/RestaurantManagement/food-catalog">Food catalog</a>
                     </li>
                     <li>
-                        <a href="/RestaurantManagement/food-list">Food list</a>
+                        <a href="/RestaurantManagement/new-dish">New dish</a>
                     </li>
                 </ul>
             </li>
@@ -43,7 +43,7 @@
                         <a href="/RestaurantManagement/branch-list">Branch list</a>
                     </li>
                      <li>
-                        <a href="/RestaurantManagement/branch-food-list">Branch food list</a>
+                        <a href="/RestaurantManagement/new-branch">New branch</a>
                     </li>
                 </ul>
             </li>

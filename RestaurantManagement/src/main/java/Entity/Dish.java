@@ -1,5 +1,5 @@
 package Entity;
-// Generated Nov 24, 2017 1:39:03 PM by Hibernate Tools 4.3.1
+// Generated Nov 25, 2017 3:47:12 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -14,6 +14,7 @@ public class Dish  implements java.io.Serializable {
      private Integer id;
      private int branchId;
      private int dishDirectoryId;
+     private String description;
      private String name;
      private String imgUrl;
      private BigDecimal price;
@@ -23,9 +24,10 @@ public class Dish  implements java.io.Serializable {
     public Dish() {
     }
 
-    public Dish(int branchId, int dishDirectoryId, String name, String imgUrl, BigDecimal price, Date createdAt, int delFlag) {
+    public Dish(int branchId, int dishDirectoryId, String description, String name, String imgUrl, BigDecimal price, Date createdAt, int delFlag) {
        this.branchId = branchId;
        this.dishDirectoryId = dishDirectoryId;
+       this.description = description;
        this.name = name;
        this.imgUrl = imgUrl;
        this.price = price;
@@ -53,6 +55,13 @@ public class Dish  implements java.io.Serializable {
     
     public void setDishDirectoryId(int dishDirectoryId) {
         this.dishDirectoryId = dishDirectoryId;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
     }
     public String getName() {
         return this.name;

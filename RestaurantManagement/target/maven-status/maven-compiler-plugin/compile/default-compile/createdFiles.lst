@@ -1,4 +1,7 @@
+DAO\branchDAO.class
+DAO\dishDAO.class
 controllers\foodManagementController.class
+DAO\branchDirectoryDAO.class
 Entity\Employee.class
 controllers\reportManagementController.class
 DAO\HibernateUtil.class
