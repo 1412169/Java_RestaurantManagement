@@ -13,6 +13,7 @@ create table DISH (
 id INT not null auto_increment,
 branch_id INT not null,
 dish_directory_id INT not null,
+description NVARCHAR (256) not null,
 name NVARCHAR(128) not null,
 img_url NVARCHAR(128) not null,
 price DECIMAL(10,2) not null,
@@ -20,6 +21,7 @@ created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
 ) ;
+
 
 create table BRANCH (
 id INT not null auto_increment,
@@ -140,11 +142,12 @@ insert into branch_directory(name) values ('Quan Tan Binh');
 
 ### select * from branch
 ### drop table branch
-insert into branch(name,address) values ('Chi nhanh An Duong Vuong','271 An Duong Vuong, Phuong 3, Quan 5, Ho Chi Minh',1);
-insert into branch(name,address) values ('Chi nhanh Tran Binh Trong','271 Tran Binh Trong, Phuong 3, Quan 5, Ho Chi Minh',1);
-insert into branch(name,address) values ('Chi nhanh Nguyen Thi Minh Khai','271 An Duong Vuong, Phuong 3, Quan 1, Ho Chi Minh',2);
-insert into branch(name,address) values ('Chi nhanh Le Van Si','271 Le Van Si, Quan Tan Binh, Ho Chi Minh',3);
-insert into branch(name,address) values ('Chi nhanh Hung Vuong','271 Hung Vuoung, Phuong 3, Quan 1, Ho Chi Minh',2);
+insert into branch(name,address,directory_id) values ('Chi nhanh An Duong Vuong','271 An Duong Vuong, Phuong 3, Quan 5, Ho Chi Minh',1);
+insert into branch(name,address,directory_id) values ('Chi nhanh Tran Binh Trong','271 Tran Binh Trong, Phuong 3, Quan 5, Ho Chi Minh',1);
+insert into branch(name,address,directory_id) values ('Chi nhanh Nguyen Thi Minh Khai','271 An Duong Vuong, Phuong 3, Quan 1, Ho Chi Minh',2);
+insert into branch(name,address,directory_id) values ('Chi nhanh Le Van Si','271 Le Van Si, Quan Tan Binh, Ho Chi Minh',3);
+insert into branch(name,address,directory_id) values ('Chi nhanh Hung Vuong','271 Hung Vuoung, Phuong 3, Quan 1, Ho Chi Minh',2);
+
 
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 1');
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 2');
@@ -172,21 +175,21 @@ insert into dish_directory(name) values ('Do an chay');
 insert into dish_directory(name) values ('Do an man');
 insert into dish_directory(name) values ('Do an ngot');
 
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (1, 1, 'Dau hu xao dau que1', '', 30000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (1, 2, 'Canh chua1', 25000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (1, 3, 'Tra sua1', 20000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (2, 1, 'Dau hu xao dau que2', '', 30000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (2, 2, 'Canh chua2', 25000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (2, 3, 'Tra sua2', 20000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (3, 1, 'Dau hu xao dau que3', '', 30000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (3, 2, 'Canh chua3', 25000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (3, 3, 'Tra sua3', 20000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (4, 1, 'Dau hu xao dau que4', '', 30000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (4, 2, 'Canh chua4', 25000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (4, 3, 'Tra sua4', 20000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (5, 1, 'Dau hu xao dau que5', '', 30000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (5, 2, 'Canh chua5', 25000);
-insert into dish(branch_id, dish_directory_id, name, img_url, price) values (5, 3, 'Tra sua5', 20000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que1', 'Hinh1', 30000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua1', 'Hinh1',25000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua1', 'Hinh1',20000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que2', 'Hinh1', 30000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua2', 'Hinh1',25000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua2', 'Hinh1',20000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (3, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que3', 'Hinh1', 30000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (3, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua3', 'Hinh1',25000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (3, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua3', 'Hinh1',20000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (4, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que4', 'Hinh1', 30000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (4, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua4', 'Hinh1',25000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (4, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua4', 'Hinh1',20000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (5, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que5', 'Hinh1', 30000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (5, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua5', 'Hinh1',25000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (5, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua5', 'Hinh1',20000);
 
 insert into employee(name, address, phone, salary, position) values ('Hien Ho', '271/4 An Duong Vuong', '0964626302', 3000000, 'Thu ngan');
 insert into employee(name, address, phone, salary, position) values ('Ngoc Lan', '271/4 An Duong Vuong', '0964626302', 3000000, 'Nhan vien phuc vu');
@@ -271,4 +274,4 @@ insert into unexpected_cost(content, cost) values ('Nhap hang lan 5', 3000000);
 
 
 
-
+select * from dish_directory
