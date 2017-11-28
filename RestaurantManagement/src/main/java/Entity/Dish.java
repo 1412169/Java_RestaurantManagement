@@ -1,8 +1,7 @@
 package Entity;
-// Generated Nov 25, 2017 3:47:12 PM by Hibernate Tools 4.3.1
+// Generated Nov 27, 2017 11:23:00 AM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -17,14 +16,14 @@ public class Dish  implements java.io.Serializable {
      private String description;
      private String name;
      private String imgUrl;
-     private BigDecimal price;
+     private double price;
      private Date createdAt;
      private int delFlag;
 
     public Dish() {
     }
 
-    public Dish(int branchId, int dishDirectoryId, String description, String name, String imgUrl, BigDecimal price, Date createdAt, int delFlag) {
+    public Dish(int branchId, int dishDirectoryId, String description, String name, String imgUrl, double price, Date createdAt, int delFlag) {
        this.branchId = branchId;
        this.dishDirectoryId = dishDirectoryId;
        this.description = description;
@@ -77,11 +76,11 @@ public class Dish  implements java.io.Serializable {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return this.price;
     }
     
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
     public Date getCreatedAt() {

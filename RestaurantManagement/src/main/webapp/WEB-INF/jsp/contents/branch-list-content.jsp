@@ -23,7 +23,7 @@
 <div class="card mb-3">
     <div class="card-header">
         <i class="fa fa-table"></i><%= bd.getName()%>
-        <button type="button" class="btn btn-primary btn-sm">New dish</button>
+        <a href="/RestaurantManagement/new-branch"><button type="button" class="btn btn-primary btn-sm">New branch</button></a>
     </div>
     <div class="card-body">
         <div class="table-responsive">

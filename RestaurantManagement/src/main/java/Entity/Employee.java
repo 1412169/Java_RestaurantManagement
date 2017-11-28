@@ -1,8 +1,7 @@
 package Entity;
-// Generated Nov 25, 2017 3:47:12 PM by Hibernate Tools 4.3.1
+// Generated Nov 27, 2017 11:23:00 AM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,7 +14,7 @@ public class Employee  implements java.io.Serializable {
      private String name;
      private String address;
      private String phone;
-     private BigDecimal salary;
+     private double salary;
      private String position;
      private Date createdAt;
      private int delFlag;
@@ -23,7 +22,7 @@ public class Employee  implements java.io.Serializable {
     public Employee() {
     }
 
-    public Employee(String name, String address, String phone, BigDecimal salary, String position, Date createdAt, int delFlag) {
+    public Employee(String name, String address, String phone, double salary, String position, Date createdAt, int delFlag) {
        this.name = name;
        this.address = address;
        this.phone = phone;
@@ -61,11 +60,11 @@ public class Employee  implements java.io.Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public BigDecimal getSalary() {
+    public double getSalary() {
         return this.salary;
     }
     
-    public void setSalary(BigDecimal salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
     public String getPosition() {

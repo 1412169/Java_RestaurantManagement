@@ -1,8 +1,7 @@
 package Entity;
-// Generated Nov 25, 2017 3:47:12 PM by Hibernate Tools 4.3.1
+// Generated Nov 27, 2017 11:23:00 AM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -16,14 +15,14 @@ public class OrderBill  implements java.io.Serializable {
      private int branchId;
      private int status;
      private int orderType;
-     private BigDecimal sumMoney;
+     private double sumMoney;
      private Date createdAt;
      private int delFlag;
 
     public OrderBill() {
     }
 
-    public OrderBill(int customerId, int branchId, int status, int orderType, BigDecimal sumMoney, Date createdAt, int delFlag) {
+    public OrderBill(int customerId, int branchId, int status, int orderType, double sumMoney, Date createdAt, int delFlag) {
        this.customerId = customerId;
        this.branchId = branchId;
        this.status = status;
@@ -68,11 +67,11 @@ public class OrderBill  implements java.io.Serializable {
     public void setOrderType(int orderType) {
         this.orderType = orderType;
     }
-    public BigDecimal getSumMoney() {
+    public double getSumMoney() {
         return this.sumMoney;
     }
     
-    public void setSumMoney(BigDecimal sumMoney) {
+    public void setSumMoney(double sumMoney) {
         this.sumMoney = sumMoney;
     }
     public Date getCreatedAt() {

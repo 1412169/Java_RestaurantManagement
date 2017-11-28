@@ -1,3 +1,4 @@
+DAO\menuDAO.class
 DAO\branchDAO.class
 DAO\dishDAO.class
 controllers\foodManagementController.class
@@ -17,6 +18,7 @@ Entity\Customer.class
 Entity\MenuDetail.class
 controllers\branchManagementController.class
 controllers\homeController.class
+DAO\orderBillDAO.class
 DAO\dishDirectoryDAO.class
 Entity\BranchTable.class
 Entity\Dish.class

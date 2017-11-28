@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Nov 25, 2017 3:47:14 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Nov 27, 2017 11:23:04 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Entity.Employee" table="employee" catalog="foodmanagement" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -17,8 +17,8 @@
         <property name="phone" type="string">
             <column name="phone" length="128" not-null="true" />
         </property>
-        <property name="salary" type="big_decimal">
-            <column name="salary" precision="10" not-null="true" />
+        <property name="salary" type="double">
+            <column name="salary" precision="22" scale="0" not-null="true" />
         </property>
         <property name="position" type="string">
             <column name="position" length="128" not-null="true" />

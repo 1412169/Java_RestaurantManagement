@@ -1,8 +1,7 @@
 package Entity;
-// Generated Nov 25, 2017 3:47:12 PM by Hibernate Tools 4.3.1
+// Generated Nov 27, 2017 11:23:00 AM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,14 +14,14 @@ public class OrderDetail  implements java.io.Serializable {
      private int orderId;
      private int dishId;
      private int quanlity;
-     private BigDecimal price;
+     private double price;
      private Date createdAt;
      private int delFlag;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(int orderId, int dishId, int quanlity, BigDecimal price, Date createdAt, int delFlag) {
+    public OrderDetail(int orderId, int dishId, int quanlity, double price, Date createdAt, int delFlag) {
        this.orderId = orderId;
        this.dishId = dishId;
        this.quanlity = quanlity;
@@ -59,11 +58,11 @@ public class OrderDetail  implements java.io.Serializable {
     public void setQuanlity(int quanlity) {
         this.quanlity = quanlity;
     }
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return this.price;
     }
     
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
     public Date getCreatedAt() {

@@ -7,8 +7,12 @@ package controllers;
 
 import DAO.branchDAO;
 import DAO.branchDirectoryDAO;
+import DAO.dishDirectoryDAO;
+import DAO.menuDAO;
 import Entity.Branch;
 import Entity.BranchDirectory;
+import Entity.DishDirectory;
+import Entity.Menu;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +39,11 @@ public class branchManagementController {
     }
     
     @RequestMapping(value="/new-branch", method=RequestMethod.GET)
-    public ModelAndView createBranchView(HttpServletRequest request) {
+    public ModelAndView createBranchView(HttpServletRequest request, Model model) {
+        List<Menu> menuList = menuDAO.getMenuList();
+        model.addAttribute("menuList",menuList);
+         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
+        model.addAttribute("dishDirectoryList", dishDirectoryList);
         return new ModelAndView("newBranch.jsp");
     }
     

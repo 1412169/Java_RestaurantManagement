@@ -1,8 +1,7 @@
 package Entity;
-// Generated Nov 25, 2017 3:47:12 PM by Hibernate Tools 4.3.1
+// Generated Nov 27, 2017 11:23:00 AM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -13,14 +12,14 @@ public class UnexpectedCost  implements java.io.Serializable {
 
      private Integer id;
      private String content;
-     private BigDecimal cost;
+     private double cost;
      private Date createdAt;
      private int delFlag;
 
     public UnexpectedCost() {
     }
 
-    public UnexpectedCost(String content, BigDecimal cost, Date createdAt, int delFlag) {
+    public UnexpectedCost(String content, double cost, Date createdAt, int delFlag) {
        this.content = content;
        this.cost = cost;
        this.createdAt = createdAt;
@@ -41,11 +40,11 @@ public class UnexpectedCost  implements java.io.Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-    public BigDecimal getCost() {
+    public double getCost() {
         return this.cost;
     }
     
-    public void setCost(BigDecimal cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
     public Date getCreatedAt() {

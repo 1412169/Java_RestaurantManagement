@@ -11,7 +11,16 @@ import DAO.dishDirectoryDAO;
 import Entity.BranchDirectory;
 import Entity.Dish;
 import Entity.DishDirectory;
+import static java.lang.Double.parseDouble;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.hibernate.dialect.Dialect;
@@ -36,41 +45,87 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author USER
  */
-
 @Controller
 public class foodManagementController {
-    @RequestMapping(value="/food-catalog", method=RequestMethod.GET)
+
+    @RequestMapping(value = "/food-catalog", method = RequestMethod.GET)
     public String foodCatalogView(HttpServletRequest request, HttpServletResponse response, Model model) {
-        System.out.print("Hello");
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
-        model.addAttribute("dishDirectoryList",dishDirectoryList);
+        model.addAttribute("dishDirectoryList", dishDirectoryList);
         List<Dish> dishList = dishDAO.getDishList();
-        model.addAttribute("dishList",dishList);
+        model.addAttribute("dishList", dishList);
         return "foodCatalog.jsp";
     }
-    
-    @RequestMapping(value="/new-dish", method=RequestMethod.GET)
-    public ModelAndView foodListView(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+    @RequestMapping(value = "/new-dish", method = RequestMethod.GET)
+    public String foodListView(HttpServletRequest request, HttpServletResponse response, Model model) {
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
-        model.addAttribute("dishDirectoryList",dishDirectoryList);
+        model.addAttribute("dishDirectoryList", dishDirectoryList);
         List<BranchDirectory> branchDirectoryList = branchDirectoryDAO.getBranchDirectoryList();
-        model.addAttribute("branchDirectoryList",branchDirectoryList);
-        return new ModelAndView("newDish.jsp");
+        model.addAttribute("branchDirectoryList", branchDirectoryList);
+        return "newDish.jsp";
     }
-    
-    @RequestMapping(value="/new-dish", method=RequestMethod.POST)
-    public String createNewDish(HttpServletRequest request, HttpServletResponse response, Model model, @ModelAttribute("dishDirectory") String dishDirectory, ModelMap mm){
+
+    @RequestMapping(value = "/new-dish", method = RequestMethod.POST)
+    public String createNewDish(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("dishDirectory") String dishDirectory) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
         String name = request.getParameterValues("name")[0];
         String price = request.getParameterValues("price")[0];
         String description = request.getParameterValues("description")[0];
         String img = request.getParameterValues("img")[0];
-        System.out.print(name);
-        System.out.print(price);
-        System.out.print(description);
-        System.out.print(img);
-        System.out.print(dishDirectory);
         String[] branchDirectory = request.getParameterValues("branchDirectory");
-        mm.put ("branchDirectoryList",branchDirectory);
+        for (int i = 0; i < branchDirectory.length; i++) {
+            Dish dish = new Dish();
+            dish.setName(name);
+            dish.setPrice(ParseDouble(price));
+            dish.setDescription(description);
+            dish.setImgUrl(img);
+            dish.setBranchId(Integer.parseInt(branchDirectory[i]));
+            dish.setDishDirectoryId(Integer.parseInt(dishDirectory));
+            dish.setCreatedAt(date);
+            dish.setDelFlag(0);
+            boolean result = dishDAO.createDish(dish);
+            if (result == true) {
+                System.out.print("Hello1");
+                return "redirect:food-catalog";
+            } else {
+                System.out.print("out");
+                return "redirect:home";
+            }
+        }
         return "redirect:food-catalog";
+    }
+
+    double ParseDouble(String strNumber) {
+        if (strNumber != null && strNumber.length() > 0) {
+            try {
+                return Double.parseDouble(strNumber);
+            } catch (Exception e) {
+                return -1;   // or some value to mark this field is wrong. or make a function validates field first ...
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    @RequestMapping(value = "/edit-dish", method = RequestMethod.GET)
+    public String editDish(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "dishId", required = true) String dishId, Model model, ModelMap mm) {
+        Dish dish = dishDAO.getDishInfo(Integer.parseInt(dishId));
+        mm.put("dish", dish);
+        return "newDish.jsp";
+    }
+
+    @RequestMapping(value = "/delete-dish", method = RequestMethod.GET)
+    public String editDish(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "dishId", required = true) String dishId, Model model) {
+        Dish dish = dishDAO.getDishInfo(Integer.parseInt(dishId));
+        dish.setDelFlag(1);
+        boolean result = dishDAO.deleteDish(dish);
+        if (result == true) {
+            return "redirect:food-catalog";
+        } else {
+            return "redirect:home";
+        }
+
     }
 }
