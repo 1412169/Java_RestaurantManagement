@@ -1,5 +1,6 @@
 create schema `foodmanagement` ;
 use foodmanagement
+drop schema foodmanagement
 
 create table DISH_DIRECTORY (
 id INT not null auto_increment,
@@ -16,18 +17,19 @@ dish_directory_id INT not null,
 description NVARCHAR (256) not null,
 name NVARCHAR(128) not null,
 img_url NVARCHAR(128) not null,
-price DECIMAL(10,2) not null,
+price DOUBLE not null,
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
 ) ;
 
-
 create table BRANCH (
 id INT not null auto_increment,
 name  NVARCHAR(128) not null,
 address NVARCHAR(128) not null,
-directory_id INT not null,
+phone NVARCHAR(128) not null,
+province NVARCHAR(128) not null,
+num_table INT,
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
@@ -37,7 +39,7 @@ create table BRANCH_TABLE (
 id INT not null auto_increment,
 branch_id INT not null,
 status INT not null,
-name NVARCHAR(128) not null,
+name NVARCHAR(128),
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
@@ -50,7 +52,7 @@ customer_id INT not null,
 branch_id INT not null,
 status INT not null,  #1: da thanh toan, 0: chua thanh toan
 order_type  INT not null, ### 1: tai quan, 2: giao di, 3: tong dai
-sum_money DECIMAL(10,2) not null,
+sum_money DOUBLE not null,
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
@@ -61,7 +63,7 @@ id INT not null auto_increment,
 order_id INT not null,
 dish_id INT not null,
 quanlity INT not null,  
-price DECIMAL(10,2) not null,
+price DOUBLE not null,
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
@@ -72,7 +74,7 @@ id INT not null auto_increment,
 name NVARCHAR(128) not null,
 address NVARCHAR(128) not null,
 phone  NVARCHAR(128) not null,
-salary DECIMAL(10,2) not null,
+salary DOUBLE not null,
 position NVARCHAR(128) not null, # Thu ngan, Giam doc, Nhan vien don ve sinh, Nhan vien phuc vu
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
@@ -99,26 +101,27 @@ del_flag INT not null default 0,
 primary key (id)
 ) ;
 
-create table BRANCH_DIRECTORY (
-id INT not null auto_increment,
-name NVARCHAR(128) not null,
-created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
-del_flag INT not null default 0,
-primary key (id)
-) ;
 
 create table UNEXPECTED_COST (
 id INT not null auto_increment,
 content NVARCHAR(128) not null,
-cost DECIMAL(10,2) not null,
+cost DOUBLE not null,
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
 ) ;
 
-create table MENU(
+create table BRANCH_MENU (
 id INT not null auto_increment,
 branch_id INT not null,
+menu_id INT not null,
+created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
+del_flag INT not null default 0,
+primary key (id)
+);
+
+create table MENU(
+id INT not null auto_increment,
 menu_name NVARCHAR(128) not null,
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
@@ -135,20 +138,16 @@ primary key (id)
 ) ;
 
 
-### select * from branch_directory
-insert into branch_directory(name) values ('Quan 5');
-insert into branch_directory(name) values ('Quan 1');
-insert into branch_directory(name) values ('Quan Tan Binh');
-
 ### select * from branch
 ### drop table branch
-insert into branch(name,address,directory_id) values ('Chi nhanh An Duong Vuong','271 An Duong Vuong, Phuong 3, Quan 5, Ho Chi Minh',1);
-insert into branch(name,address,directory_id) values ('Chi nhanh Tran Binh Trong','271 Tran Binh Trong, Phuong 3, Quan 5, Ho Chi Minh',1);
-insert into branch(name,address,directory_id) values ('Chi nhanh Nguyen Thi Minh Khai','271 An Duong Vuong, Phuong 3, Quan 1, Ho Chi Minh',2);
-insert into branch(name,address,directory_id) values ('Chi nhanh Le Van Si','271 Le Van Si, Quan Tan Binh, Ho Chi Minh',3);
-insert into branch(name,address,directory_id) values ('Chi nhanh Hung Vuong','271 Hung Vuoung, Phuong 3, Quan 1, Ho Chi Minh',2);
 
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh An Duong Vuong', '271 An Duong Vuong, Phuong 3, Quan 5, Ho Chi Minh' ,'0964626302', 'TP HCM', 10);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Tran Binh Trong','271 Tran Binh Trong, Phuong 3, Quan 5, Ho Chi Minh' ,'0964626302', 'TP HCM', 10);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Nguyen Thi Minh Khai','271 An Duong Vuong, Phuong 3, Quan 1, Ho Chi Minh' ,'0964626302', 'TP HCM', 10);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Le Van Si','271 Le Van Si, Quan Tan Binh, Ho Chi Minh','0964626302', 'TP HCM', 10);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Hung Vuong','271 Hung Vuoung, Phuong 3, Quan 1, Ho Chi Minh','0964626302', 'TP HCM', 10);
 
+select * from branch_table
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 1');
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 2');
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 3');
@@ -175,9 +174,10 @@ insert into dish_directory(name) values ('Do an chay');
 insert into dish_directory(name) values ('Do an man');
 insert into dish_directory(name) values ('Do an ngot');
 
+###select * from dish
 insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que1', 'Hinh1', 30000);
 insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua1', 'Hinh1',25000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua1', 'Hinh1',20000);
+insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.',  'Tra sua1', 'Hinh1',20000);
 insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que2', 'Hinh1', 30000);
 insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua2', 'Hinh1',25000);
 insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua2', 'Hinh1',20000);
@@ -197,22 +197,39 @@ insert into employee(name, address, phone, salary, position) values ('Van  Trong
 insert into employee(name, address, phone, salary, position) values ('Thao Dieu', '271/4 An Duong Vuong', '0964626302', 3000000, 'Thu ngan');
 insert into employee(name, address, phone, salary, position) values ('Thai Nghiep', '271/4 An Duong Vuong', '0964626302', 3000000, 'Thu ngan');
 
-insert into menu(branch_id, menu_name) values (1, 'Menu giang sinh');
-insert into menu(branch_id, menu_name) values (1, 'Menu haloween');
-insert into menu(branch_id, menu_name) values (1, 'Menu lab');
-insert into menu(branch_id, menu_name) values (2, 'Menu giang ho');
-insert into menu(branch_id, menu_name) values (2, 'Menu hien ho');
-insert into menu(branch_id, menu_name) values (2, 'Menu hiep khach');
-insert into menu(branch_id, menu_name) values (3, 'Menu ngay he');
-insert into menu(branch_id, menu_name) values (3, 'Menu mua xuan');
-insert into menu(branch_id, menu_name) values (3, 'Menu mua dong');
-insert into menu(branch_id, menu_name) values (4, 'Menu mua le');
-insert into menu(branch_id, menu_name) values (4, 'Menu cuoi nam');
-insert into menu(branch_id, menu_name) values (4, 'Menu dau nam');
-insert into menu(branch_id, menu_name) values (5, 'Menu hoi nhap');
-insert into menu(branch_id, menu_name) values (5, 'Menu le phu nu');
-insert into menu(branch_id, menu_name) values (5, 'Menu cuoi nam');
 
+insert into menu(menu_name) values ('Menu giang sinh');
+insert into menu(menu_name) values ('Menu haloween');
+insert into menu(menu_name) values ('Menu lab');
+insert into menu(menu_name) values ('Menu giang ho');
+insert into menu(menu_name) values ('Menu hien ho');
+insert into menu(menu_name) values ('Menu hiep khach');
+insert into menu(menu_name) values ('Menu ngay he');
+insert into menu(menu_name) values ('Menu mua xuan');
+insert into menu(menu_name) values ('Menu mua dong');
+insert into menu(menu_name) values ('Menu mua le');
+insert into menu(menu_name) values ('Menu cuoi nam');
+insert into menu(menu_name) values ('Menu dau nam');
+insert into menu(menu_name) values ('Menu hoi nhap');
+insert into menu(menu_name) values ('Menu le phu nu');
+insert into menu(menu_name) values ('Menu cuoi nam');
+
+### select * from branch_menu
+insert into branch_menu(branch_id, menu_id) values (1,1);
+insert into branch_menu(branch_id, menu_id) values (1,2);
+insert into branch_menu(branch_id, menu_id) values (1,3);
+insert into branch_menu(branch_id, menu_id) values (2,4);
+insert into branch_menu(branch_id, menu_id) values (2,5);
+insert into branch_menu(branch_id, menu_id) values (2,6);
+insert into branch_menu(branch_id, menu_id) values (3,7);
+insert into branch_menu(branch_id, menu_id) values (3,8);
+insert into branch_menu(branch_id, menu_id) values (3,9);
+insert into branch_menu(branch_id, menu_id) values (4,10);
+insert into branch_menu(branch_id, menu_id) values (4,11);
+insert into branch_menu(branch_id, menu_id) values (4,12);
+insert into branch_menu(branch_id, menu_id) values (5,13);
+insert into branch_menu(branch_id, menu_id) values (5,14);
+insert into branch_menu(branch_id, menu_id) values (5,15);
 
 insert into menu_detail(menu_id, id_dish) values (1, 1);
 insert into menu_detail(menu_id, id_dish) values (1, 2);
@@ -272,6 +289,3 @@ insert into unexpected_cost(content, cost) values ('Nhap hang lan 3', 6700000);
 insert into unexpected_cost(content, cost) values ('Nhap hang lan 4', 5000000);
 insert into unexpected_cost(content, cost) values ('Nhap hang lan 5', 3000000);
 
-
-
-select * from dish_directory
