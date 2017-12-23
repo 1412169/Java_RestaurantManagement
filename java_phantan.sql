@@ -1,6 +1,6 @@
 create schema `foodmanagement` ;
 use foodmanagement
-drop schema foodmanagement
+
 
 create table DISH_DIRECTORY (
 id INT not null auto_increment,
@@ -12,7 +12,6 @@ primary key (id)
 
 create table DISH (
 id INT not null auto_increment,
-branch_id INT not null,
 dish_directory_id INT not null,
 description NVARCHAR (256) not null,
 name NVARCHAR(128) not null,
@@ -147,7 +146,6 @@ insert into branch(name,address, phone, province, num_table) values ('Chi nhanh 
 insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Le Van Si','271 Le Van Si, Quan Tan Binh, Ho Chi Minh','0964626302', 'TP HCM', 10);
 insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Hung Vuong','271 Hung Vuoung, Phuong 3, Quan 1, Ho Chi Minh','0964626302', 'TP HCM', 10);
 
-select * from branch_table
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 1');
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 2');
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 3');
@@ -175,21 +173,21 @@ insert into dish_directory(name) values ('Do an man');
 insert into dish_directory(name) values ('Do an ngot');
 
 ###select * from dish
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que1', 'Hinh1', 30000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua1', 'Hinh1',25000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (1, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.',  'Tra sua1', 'Hinh1',20000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que2', 'Hinh1', 30000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua2', 'Hinh1',25000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (2, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua2', 'Hinh1',20000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (3, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que3', 'Hinh1', 30000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (3, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua3', 'Hinh1',25000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (3, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua3', 'Hinh1',20000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (4, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que4', 'Hinh1', 30000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (4, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua4', 'Hinh1',25000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (4, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua4', 'Hinh1',20000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (5, 1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que5', 'Hinh1', 30000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (5, 2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua5', 'Hinh1',25000);
-insert into dish(branch_id, dish_directory_id, description, name, img_url, price) values (5, 3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua5', 'Hinh1',20000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que1', 'Hinh1', 30000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua1', 'Hinh1',25000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.',  'Tra sua1', 'Hinh1',20000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que2', 'Hinh1', 30000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua2', 'Hinh1',25000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua2', 'Hinh1',20000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que3', 'Hinh1', 30000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua3', 'Hinh1',25000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua3', 'Hinh1',20000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que4', 'Hinh1', 30000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua4', 'Hinh1',25000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua4', 'Hinh1',20000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (1, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Dau hu xao dau que5', 'Hinh1', 30000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (2, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Canh chua5', 'Hinh1',25000);
+insert into dish(dish_directory_id, description, name, img_url, price) values (3, 'However if I enter anything in it, then the response.jsp code is displayed? Please suggest changes in my code.', 'Tra sua5', 'Hinh1',20000);
 
 insert into employee(name, address, phone, salary, position) values ('Hien Ho', '271/4 An Duong Vuong', '0964626302', 3000000, 'Thu ngan');
 insert into employee(name, address, phone, salary, position) values ('Ngoc Lan', '271/4 An Duong Vuong', '0964626302', 3000000, 'Nhan vien phuc vu');
@@ -272,6 +270,12 @@ insert into order_bill(customer_id, branch_id, status, order_type, sum_money) va
 insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (4, 4, 0, 3, 20000);
 insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (5, 5, 0, 1, 20000);
 
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 30000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 55000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 25000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 3, 20000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 20000);
+
 
 insert into order_detail (order_id, dish_id, quanlity, price) values (1, 1, 1, 30000);
 insert into order_detail (order_id, dish_id, quanlity, price) values (2, 1, 1, 30000);
@@ -279,6 +283,15 @@ insert into order_detail (order_id, dish_id, quanlity, price) values (2, 2, 1, 2
 insert into order_detail (order_id, dish_id, quanlity, price) values (3, 11, 1, 25000);
 insert into order_detail (order_id, dish_id, quanlity, price) values (4, 9, 1, 20000);
 insert into order_detail (order_id, dish_id, quanlity, price) values (5, 15, 1, 20000);
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 20000,'2017-11-15');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-11-15');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 10000,'2017-10-15');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-10-15');
+
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 20000,'2017-12-21');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-12-21');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 10000,'2017-12-21');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-12-21');
 
 insert into table_detail(customer_id, table_id, time) values (1, 1, '');
 insert into table_detail(customer_id, table_id, time) values (5, 2, '');
@@ -289,3 +302,73 @@ insert into unexpected_cost(content, cost) values ('Nhap hang lan 3', 6700000);
 insert into unexpected_cost(content, cost) values ('Nhap hang lan 4', 5000000);
 insert into unexpected_cost(content, cost) values ('Nhap hang lan 5', 3000000);
 
+-- ------------------------------------------------------------------
+select *from dish
+select * from menu
+select * from order_detail
+select SUM(price) from order_detail where
+
+-- get the first date of year
+SELECT MAKEDATE(year(now()),1);
+-- get the last date of year
+SELECT LAST_DAY(DATE_ADD(NOW(), INTERVAL 12-MONTH(NOW()) MONTH));
+
+-- select theo tháng
+SELECT MONTH(created_at) , SUM(price) 
+FROM order_detail
+-- WHERE created_at >= NOW() - INTERVAL 1 YEAR
+GROUP BY MONTH(created_at)
+
+-- select ngày hiện tại
+SELECT CURDATE() 
+
+SELECT MONTH(t1.created_at),  SUM(t1.price)
+FROM order_detail as t1
+LEFT OUTER JOIN order_detail as t2 ON MONTH(t1.created_at) = MONTH(t2.created_at)
+WHERE t1.created_at >= NOW() - INTERVAL 1 YEAR 
+GROUP BY MONTH(t1.created_at)
+
+
+-- --------------------------------------------------------
+
+-- doanh thu theo ngày
+select COALESCE(SUM(price),0) as revenue_current_date  from order_detail where DATE(created_at) = CURDATE() 
+
+-- doanh thu theo tuần
+SELECT MONTH(created_at), WEEK(created_at), SUM(price)
+FROM order_detail 
+WHERE created_at >= NOW() - INTERVAL 1 YEAR 
+GROUP BY WEEK(created_at)
+
+-- doanh thu theo tháng
+SELECT MONTH(order_detail.created_at), SUM(order_detail.price)
+FROM order_detail, order_bill 
+WHERE order_detail.created_at  >= NOW() - INTERVAL 1 YEAR and order_bill.id = order_detail.order_id
+GROUP BY MONTH(order_detail.created_at)
+
+-- doanh thu theo năm
+SELECT SUM(price)
+FROM order_detail 
+WHERE created_at >= NOW() - INTERVAL 1 YEAR 
+
+-- CHI NHÁNH
+-- doanh thu theo ngày
+select order_bill.branch_id, SUM(price) as revenue_current_date 
+from order_detail, order_bill
+where order_bill.created_at = CURDATE() and order_bill.id = order_detail.order_id
+group by order_bill.branch_id
+
+select *
+from order_detail, order_bill
+where order_bill.id = order_detail.order_id
+
+-- doanh thu theo tuần
+SELECT MONTH(created_at), WEEK(created_at), SUM(price)
+FROM order_detail 
+WHERE created_at >= NOW() - INTERVAL 1 YEAR 
+GROUP BY WEEK(created_at)
+
+select MONTH(od.createdAt),sum(od.price) as Revenue from OrderDetail od group by MONTH(od.createdAt)
+{ x: new Date(2016, <%= obj[0] %>), y: <%=  obj[1] %> },
+
+select branch_id, count(order_type) as num_order from order_bill group by branch_id, order_type
