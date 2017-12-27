@@ -29,6 +29,12 @@
                         <a href="/RestaurantManagement/food-catalog">Food catalog</a>
                     </li>
                     <li>
+                        <a href="/RestaurantManagement/menu-list">Menu list</a>
+                    </li>
+                    <li>
+                        <a href="/RestaurantManagement/new-menu">New menu</a>
+                    </li>
+                    <li>
                         <a href="/RestaurantManagement/new-dish">New dish</a>
                     </li>
                 </ul>

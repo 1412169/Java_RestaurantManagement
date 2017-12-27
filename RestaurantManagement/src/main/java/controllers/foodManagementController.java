@@ -5,10 +5,10 @@
  */
 package controllers;
 
-import DAO.branchDirectoryDAO;
+import DAO.branchDAO;
 import DAO.dishDAO;
 import DAO.dishDirectoryDAO;
-import Entity.BranchDirectory;
+import Entity.Branch;
 import Entity.Dish;
 import Entity.DishDirectory;
 import static java.lang.Double.parseDouble;
@@ -35,7 +35,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,40 +60,36 @@ public class foodManagementController {
     public String foodListView(HttpServletRequest request, HttpServletResponse response, Model model) {
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
         model.addAttribute("dishDirectoryList", dishDirectoryList);
-        List<BranchDirectory> branchDirectoryList = branchDirectoryDAO.getBranchDirectoryList();
-        model.addAttribute("branchDirectoryList", branchDirectoryList);
+        List<Branch> branchList = branchDAO.getBranchList();
+        model.addAttribute("branchList", branchList);
         return "newDish.jsp";
     }
 
     @RequestMapping(value = "/new-dish", method = RequestMethod.POST)
-    public String createNewDish(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("dishDirectory") String dishDirectory) {
+    public String createNewDish(HttpServletRequest request, HttpServletResponse response) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String name = request.getParameterValues("name")[0];
         String price = request.getParameterValues("price")[0];
         String description = request.getParameterValues("description")[0];
         String img = request.getParameterValues("img")[0];
-        String[] branchDirectory = request.getParameterValues("branchDirectory");
-        for (int i = 0; i < branchDirectory.length; i++) {
-            Dish dish = new Dish();
-            dish.setName(name);
-            dish.setPrice(ParseDouble(price));
-            dish.setDescription(description);
-            dish.setImgUrl(img);
-            dish.setBranchId(Integer.parseInt(branchDirectory[i]));
-            dish.setDishDirectoryId(Integer.parseInt(dishDirectory));
-            dish.setCreatedAt(date);
-            dish.setDelFlag(0);
-            boolean result = dishDAO.createDish(dish);
-            if (result == true) {
-                System.out.print("Hello1");
-                return "redirect:food-catalog";
-            } else {
-                System.out.print("out");
-                return "redirect:home";
-            }
+        String dishDirectory = request.getParameterValues("dishDirectory")[0];
+        Dish dish = new Dish();
+        dish.setName(name);
+        dish.setPrice(ParseDouble(price));
+        dish.setDescription(description);
+        dish.setImgUrl(img);
+        dish.setDishDirectoryId(Integer.parseInt(dishDirectory));
+        dish.setCreatedAt(date);
+        dish.setDelFlag(0);
+        boolean result = dishDAO.createDish(dish);
+        if (result == true) {
+            System.out.print("Hello1");
+            return "redirect:food-catalog";
+        } else {
+            System.out.print("out");
+            return "redirect:home";
         }
-        return "redirect:food-catalog";
     }
 
     double ParseDouble(String strNumber) {
@@ -109,15 +104,46 @@ public class foodManagementController {
         }
     }
 
-    @RequestMapping(value = "/edit-dish", method = RequestMethod.GET)
-    public String editDish(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "dishId", required = true) String dishId, Model model, ModelMap mm) {
-        Dish dish = dishDAO.getDishInfo(Integer.parseInt(dishId));
-        mm.put("dish", dish);
-        return "newDish.jsp";
+    @RequestMapping(value = "/edit-dish/{dishId}", method = RequestMethod.GET)
+    public String editDish(@PathVariable("dishId") int dishId, Model model, ModelMap mm) {
+        Dish dish = dishDAO.getDishInfo(dishId);
+        List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
+        List<Branch> branchList = branchDAO.getBranchList();
+        model.addAttribute("dishDirectoryList", dishDirectoryList);
+        model.addAttribute("branchList", branchList);
+        model.addAttribute("dish", dish);
+        return "editDish.jsp";
+    }
+    
+    @RequestMapping(value = "/edit-dish/{dishId}", method = RequestMethod.POST)
+    public String editDish(@PathVariable("dishId") int dishId,HttpServletRequest request, HttpServletResponse response, Model model, ModelMap mm) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String name = request.getParameterValues("name")[0];
+        String price = request.getParameterValues("price")[0];
+        String description = request.getParameterValues("description")[0];
+        String img = request.getParameterValues("img")[0];
+        String dishDirectory = request.getParameterValues("dishDirectory")[0];
+        Dish dish = dishDAO.getDishInfo(dishId);
+        dish.setName(name);
+        dish.setPrice(ParseDouble(price));
+        dish.setDescription(description);
+        dish.setImgUrl(img);
+        dish.setDishDirectoryId(Integer.parseInt(dishDirectory));
+        dish.setCreatedAt(date);
+        dish.setDelFlag(0);
+        boolean result = dishDAO.updateDish(dish);
+        if (result == true) {
+            System.out.print("Hello1");
+            return "redirect:../food-catalog";
+        } else {
+            System.out.print("out");
+            return "redirect:../food-catalog";
+        }
     }
 
     @RequestMapping(value = "/delete-dish", method = RequestMethod.GET)
-    public String editDish(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "dishId", required = true) String dishId, Model model) {
+    public String deleteDish(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "dishId", required = true) String dishId, Model model) {
         Dish dish = dishDAO.getDishInfo(Integer.parseInt(dishId));
         dish.setDelFlag(1);
         boolean result = dishDAO.deleteDish(dish);
@@ -126,6 +152,5 @@ public class foodManagementController {
         } else {
             return "redirect:home";
         }
-
     }
 }

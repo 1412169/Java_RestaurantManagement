@@ -15,12 +15,19 @@
         <link href="<c:url value="/resources/vendor/font-awesome/css/font-awesome.min.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/vendor/datatables/dataTables.bootstrap4.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/sb-admin.css" />" rel="stylesheet">
+
+        <link href="<c:url value="/resources/css/demo-page.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/examples.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/geochart.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/hover.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/magnific-popup.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
         <title>Login Page</title>
     </head>
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
         <!--Navigation bar-->
         <jsp:include page="navbar.jsp" />
-        
+
         <!--Page content-->
         <div class="content-wrapper">
             <div class="container-fluid">
@@ -46,6 +53,20 @@
         <script src="<c:url value="/resources/js/sb-admin.min.js" />"></script>
         <script src="<c:url value="/resources/js/sb-admin-datatables.min.js" />"></script>
         <script src="<c:url value="/resources/js/sb-admin-charts.min.js" />"></script>
+
+        <script src="<c:url value="/resources/js/Chart.min.js" />"></script>
+        <script src="<c:url value="/resources/js/bars.js" />"></script>
+        <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
+        <script src="<c:url value="/resources/js/chartinator.js" />"></script>
+        <script src="<c:url value="/resources/js/gmaps.js" />"></script>
+        <script src="<c:url value="/resources/js/jquery-2.1.1.min.js" />"></script>
+
+        <script src="<c:url value="/resources/js/jquery.magnific-popup.js" />"></script>
+        <script src="<c:url value="/resources/js/jquery.nicescroll.js" />"></script>
+        <script src="<c:url value="/resources/js/modernizn.min.js" />"></script>
+        <script src="<c:url value="/resources/js/nivo-lightbox.min.js" />"></script>
+        <script src="<c:url value="/resources/js/script.js" />"></script>
+        <script src="<c:url value="/resources/js/skycons.js" />"></script>
 
     </body>
 </html>

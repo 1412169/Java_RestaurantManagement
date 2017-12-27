@@ -21,7 +21,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="" width="100%" cellspacing="0">
+            <table class="table table-bordered dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -42,23 +42,29 @@
                 <td><%= d.getCreatedAt()%></td>
                 <td><%= d.getPrice()%></td>
                 <td>
-                    <a href="/RestaurantManagement/edit-dish?dishId=<%=d.getId()%>">
+                   <a href="/RestaurantManagement/edit-dish/<%=d.getId()%>">
                         <button title = "Edit" type="button" class="btn btn-success btn-sm" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     </a>
-                    <button onclick="return confirm_decision();" title = "Delete" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button>
+                    <!--<button onclick="return edit();" title = "Edit" type="button" class="btn btn-success btn-sm" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>-->
+                    <button onclick="return confirm_delete(<%=d.getId()%>);" title = "Delete" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button>
                 </td>
                 <script>
-                    function confirm_decision() {
-                        if (confirm("You want to delete dish <%=d.getId()%> - <%=d.getName()%> ?")) // this will pop up confirmation box and if yes is clicked it call servlet else return to page
+                    function confirm_delete(id) {
+                        if (confirm("You want to delete dish " + id + " ?")) // this will pop up confirmation box and if yes is clicked it call servlet else return to page
                         {
-                            window.location = "/RestaurantManagement/delete-dish?dishId=" + dishId;
-
+                            window.location = "/RestaurantManagement/delete-dish?dishId=" + id
                         } else {
                             return false;
                         }
                         return true;
                     }
                 </script>
+                
+<!--                 <script>
+                    function edit(id) {
+                        window.location = "/RestaurantManagement/edit-dish?dishId=" + id
+                    }
+                </script>-->
                 </tbody>
                 <% }%>
                 <% }%>

@@ -1,5 +1,5 @@
 package Entity;
-// Generated Nov 27, 2017 11:23:00 AM by Hibernate Tools 4.3.1
+// Generated Dec 21, 2017 7:10:52 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,17 +13,30 @@ public class Branch  implements java.io.Serializable {
      private Integer id;
      private String name;
      private String address;
-     private int directoryId;
+     private String phone;
+     private String province;
+     private Integer numTable;
      private Date createdAt;
      private int delFlag;
 
     public Branch() {
     }
 
-    public Branch(String name, String address, int directoryId, Date createdAt, int delFlag) {
+	
+    public Branch(String name, String address, String phone, String province, Date createdAt, int delFlag) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.province = province;
+        this.createdAt = createdAt;
+        this.delFlag = delFlag;
+    }
+    public Branch(String name, String address, String phone, String province, Integer numTable, Date createdAt, int delFlag) {
        this.name = name;
        this.address = address;
-       this.directoryId = directoryId;
+       this.phone = phone;
+       this.province = province;
+       this.numTable = numTable;
        this.createdAt = createdAt;
        this.delFlag = delFlag;
     }
@@ -49,12 +62,26 @@ public class Branch  implements java.io.Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
-    public int getDirectoryId() {
-        return this.directoryId;
+    public String getPhone() {
+        return this.phone;
     }
     
-    public void setDirectoryId(int directoryId) {
-        this.directoryId = directoryId;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public String getProvince() {
+        return this.province;
+    }
+    
+    public void setProvince(String province) {
+        this.province = province;
+    }
+    public Integer getNumTable() {
+        return this.numTable;
+    }
+    
+    public void setNumTable(Integer numTable) {
+        this.numTable = numTable;
     }
     public Date getCreatedAt() {
         return this.createdAt;

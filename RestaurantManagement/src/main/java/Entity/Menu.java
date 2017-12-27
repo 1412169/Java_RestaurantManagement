@@ -1,5 +1,5 @@
 package Entity;
-// Generated Nov 27, 2017 11:23:00 AM by Hibernate Tools 4.3.1
+// Generated Dec 21, 2017 7:10:52 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,7 +11,6 @@ public class Menu  implements java.io.Serializable {
 
 
      private Integer id;
-     private int branchId;
      private String menuName;
      private Date createdAt;
      private int delFlag;
@@ -19,8 +18,7 @@ public class Menu  implements java.io.Serializable {
     public Menu() {
     }
 
-    public Menu(int branchId, String menuName, Date createdAt, int delFlag) {
-       this.branchId = branchId;
+    public Menu(String menuName, Date createdAt, int delFlag) {
        this.menuName = menuName;
        this.createdAt = createdAt;
        this.delFlag = delFlag;
@@ -32,13 +30,6 @@ public class Menu  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
-    }
-    public int getBranchId() {
-        return this.branchId;
-    }
-    
-    public void setBranchId(int branchId) {
-        this.branchId = branchId;
     }
     public String getMenuName() {
         return this.menuName;

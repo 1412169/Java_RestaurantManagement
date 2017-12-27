@@ -46,11 +46,10 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3311/foodmanagement?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
-    <property name="hibernate.show_sql">true</property>
     <mapping resource="Entity/Employee.hbm.xml"/>
     <mapping resource="Entity/DishDirectory.hbm.xml"/>
+    <mapping resource="Entity/BranchMenu.hbm.xml"/>
     <mapping resource="Entity/MenuDetail.hbm.xml"/>
-    <mapping resource="Entity/BranchDirectory.hbm.xml"/>
     <mapping resource="Entity/Branch.hbm.xml"/>
     <mapping resource="Entity/UnexpectedCost.hbm.xml"/>
     <mapping resource="Entity/TableDetail.hbm.xml"/>

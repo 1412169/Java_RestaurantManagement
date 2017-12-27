@@ -4,7 +4,7 @@
     Author     : USER
 --%>
 
-<%@page import="Entity.BranchDirectory"%>
+<%@page import="Entity.Branch"%>
 <%@page import="java.util.List"%>
 <%@page import="Entity.DishDirectory"%>
 <%--<%@page contentType="text/html" pageEncoding="UTF-8"%>--%>
@@ -23,11 +23,11 @@
         <div class="col-6">
             <div class="form-group">
                 <label style="font-weight: bold">Dish name</label>
-                <spring:nestedPath path="name">
-                    <spring:bind path="value">
+<!--                <spring:nestedPath path="name">
+                    <spring:bind path="value">-->
                         <input type="text" class="form-control" id="exampleFormControlInput1" name="name">
-                    </spring:bind>
-                </spring:nestedPath>
+<!--                    </spring:bind>
+                </spring:nestedPath>-->
             </div>
             <div class="form-group">
                 <label style="font-weight: bold">Price</label>
@@ -47,8 +47,6 @@
 
             </div>
             <div class="form-group text-center">
-
-
                 <input class="btn btn-primary btn-lg btn-sm" type="submit" value="Add new dish">
 
             </div>
@@ -76,17 +74,16 @@
                 </spring:nestedPath> 
             </div>
 
-            <div class="col-6">
+<%--            <div class="col-8">
                 <label style="font-weight: bold">Branch directory</label> <br>
-                <%List<BranchDirectory> branchDirectoryList = (List<BranchDirectory>) request.getAttribute("branchDirectoryList"); %>
-                <% for (BranchDirectory bd : branchDirectoryList) {%> 
-                <spring:nestedPath path="branchDirectory">
+                <%List<Branch> branchList = (List<Branch>) request.getAttribute("branchList"); %>
+                <% for (Branch bd : branchList) {%> 
+                <spring:nestedPath path="branch">
                     <spring:bind path="value">
-                        <input style="float: right; transform: scale(1.5); margin-right: 10px; margin-top: 10px" type="checkbox" name="branchDirectory" value="<%=bd.getId()%>"><%=bd.getName()%> <br>
+                        <input style="float: right; transform: scale(1.5); margin-right: 10px; margin-top: 10px" type="checkbox" name="branch" value="<%=bd.getId()%>"><%=bd.getName()%> <br>
                     </spring:bind>
                 </spring:nestedPath> 
                 <% }%>  
-            </div>
-
+            </div>--%>
         </div>
 </form>

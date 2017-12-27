@@ -102,4 +102,49 @@ public class dishDAO {
         }
         return true;
     }
+    
+    public static java.util.List<Dish> getDishListByDirectoryId(int directoryId) {
+        java.util.List<Dish> dishList = new ArrayList<Dish>();
+        dishList = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            String queryString = "from Dish where dishDirectoryId = " + directoryId;
+            Query query = session.createQuery(queryString);
+            dishList = query.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return dishList;
+    }
+    
+     public static java.util.List getCountDish(int branchId, int year, int month) {
+        java.util.List dishList = new ArrayList();
+        dishList = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String queryString;
+        try {
+            if (branchId == 0){
+                 queryString = "select dd.id, dd.name, d.id, d.name, d.price, count(d.id) "
+                        + "from Dish d, DishDirectory dd, OrderDetail od, OrderBill ob "
+                        + "where od.orderId = ob.id and  d.dishDirectoryId = dd.id and d.id = od.dishId and YEAR(ob.createdAt) = " + year + " and MONTH(ob.createdAt) = " + month + ""
+                        + "group by d.dishDirectoryId, dd.name, d.name, d.id, MONTH(ob.createdAt)" ;
+            }
+            else {
+                queryString = "select dd.id, dd.name, d.id, d.name ,d.price, count(d.id) "
+                        + "from Dish d, DishDirectory dd, OrderDetail od, OrderBill ob "
+                        + "where od.orderId = ob.id and  d.dishDirectoryId = dd.id and d.id = od.dishId and YEAR(ob.createdAt) = " + year + " and MONTH(ob.createdAt) = " + month + " and ob.branchId = " + branchId + ""
+                        + "group by d.dishDirectoryId, dd.name, d.name, d.id, MONTH(ob.createdAt)" ;
+            }
+            
+            Query query = session.createQuery(queryString);
+            dishList = query.list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return dishList;
+    }
 }
