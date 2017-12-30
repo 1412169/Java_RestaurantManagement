@@ -1,7 +1,11 @@
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="Entity.Branch"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+
 <head>
 
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.3.1026/styles/kendo.common-material.min.css" />
@@ -12,13 +16,14 @@
     <script src="https://kendo.cdn.telerik.com/2017.3.1026/js/kendo.all.min.js"></script>
 </head>
 <body>
-    <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Home</a>
+            <a href="#">Report management</a>
         </li>
+        <li class="breadcrumb-item active">Cost report</li>
     </ol>
-    <form action="/RestaurantManagement/revenue-report" method="post">
+    <!-- Breadcrumbs-->
+    <form action="/RestaurantManagement/cost-report" method="post">
         <div id="example ">
             <div class="row text-center">
                 <div class="col-4 ">
@@ -68,7 +73,7 @@
 
             <script>
                 $("#datepicker").kendoDatePicker({
-                animation: false
+                    animation: false
                 });
             </script>       
         </div>
@@ -86,13 +91,13 @@
                         </div>
                         <div class="mr-5" style="font-size: 20px; color: #18191c">DATE: <%= day%>/<%= month%>/<%= year%> </div>
                     </div>
-                    <%List<Object[]> revenueReportDate = (List<Object[]>) request.getAttribute("revenueReportDate");%>
+                    <%String costDate = (String) request.getAttribute("costDate");%>
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
                         <div class="mr-5">REVENUE OF DATE</div>
-                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportDate.toString().substring(1, revenueReportDate.toString().length() - 1)%></div>
+                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= costDate%></div>
                     </div>
                 </div>
             </div>
@@ -105,13 +110,13 @@
                         </div>
                         <div class="mr-5" style="font-size: 20px; color: #18191c">MONTH: <%= month%>/<%= year%> </div>
                     </div>
-                    <%List<Object[]> revenueReportMonth = (List<Object[]>) request.getAttribute("revenueReportMonth");%>
+                    <%String costMonth = (String) request.getAttribute("costMonth");%>
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
                         <div class="mr-5">REVENUE OF MONTH</div>
-                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportMonth.toString().substring(1, revenueReportMonth.toString().length() - 1)%></div>
+                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= costMonth%></div>
                     </div>
                 </div>
             </div>
@@ -124,17 +129,128 @@
                         </div>
                         <div class="mr-5" style="font-size: 20px; color: #18191c">YEAR: <%= year%> </div>
                     </div>
-                    <%List<Object[]> revenueReportYear = (List<Object[]>) request.getAttribute("revenueReportYear");%>
+                    <% String costYear = (String) request.getAttribute("costYear");%>
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
                         <div class="mr-5">REVENUE OF YEAR</div>
-                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportYear.toString().substring(1, revenueReportYear.toString().length() - 1)%></div>
+                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= costYear%></div>
                     </div>
                 </div>
             </div>
         </div>
         <br/>
- </form>
+        <%List<Object[]> monthlyCost = (List<Object[]>) request.getAttribute("monthlyCost");%>
+        <script>
+            window.onload = function () {
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    title: {
+                        text: "Monthly cost in <%= year%>"
+                    },
+                    axisX: {
+                        valueFormatString: "MMM"
+                    },
+                    axisY: {
+                        prefix: "$",
+                        labelFormatter: addSymbols
+                    },
+                    toolTip: {
+                        shared: true
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        itemclick: toggleDataSeries
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            name: "Cost",
+                            showInLegend: false,
+                            xValueFormatString: "MMMM YYYY",
+                            yValueFormatString: "$#,##0",
+                            dataPoints: [
+
+            <% for (Object[] obj : monthlyCost) {%>
+                                {x: new Date(<%= year%>, <%= (int) obj[0] - 1%>), y: <%=  obj[1]%>},
+            <% }%>
+
+                            ]
+                        }]
+                });
+                chart.render();
+                function addSymbols(e) {
+                    var suffixes = ["", "K", "M", "B"];
+                    var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
+                    if (order > suffixes.length - 1)
+                        order = suffixes.length - 1;
+                    var suffix = suffixes[order];
+                    return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
+                }
+
+                function toggleDataSeries(e) {
+                    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                        e.dataSeries.visible = false;
+                    } else {
+                        e.dataSeries.visible = true;
+                    }
+                    e.chart.render();
+                }
+
+            }
+        </script>
+
+        <% DecimalFormat formatter = new DecimalFormat("#,###");%> 
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i>Monthly detail in <%= year%></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>January</th>
+                                <th>February</th>
+                                <th>Match</th>
+                                <th>April</th>
+                                <th>May</th>
+                                <th>June</th>
+                                <th>July</th>
+                                <th>August</th>
+                                <th>September</th>
+                                <th>October</th>
+                                <th>November</th>
+                                <th>December</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td><%= formatter.format(monthlyCost.get(0)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(1)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(2)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(3)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(4)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(5)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(6)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(7)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(8)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(9)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(10)[1])%></td>
+                                <td><%= formatter.format(monthlyCost.get(11)[1])%></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br/>                   
+        <div id="chartContainer" style="height: 250px; width: 100%;">
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
+    </form>
 </body>

@@ -5,6 +5,8 @@
  */
 package authentication;
 
+import DAO.employeeDAO;
+import Entity.Employee;
 import java.util.ArrayList;
 import java.util.List;
  
@@ -15,15 +17,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
- 
+
 @Service
 public class MyDBAuthenticationService implements UserDetailsService {
  
-    private AccountDAO accountDAO;
+    private employeeDAO accountDAO;
  
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountDAO.findAccount(username);
+        Employee account = accountDAO.findAccount(username);
         System.out.println("Account= " + account);
  
         if (account == null) {
@@ -31,8 +33,8 @@ public class MyDBAuthenticationService implements UserDetailsService {
                     + username + " was not found in the database");
         }
  
-        // EMPLOYEE,MANAGER,..
-        String role = account.getUserRole();
+       
+        String role = account.getPosition();
  
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
  
@@ -41,14 +43,8 @@ public class MyDBAuthenticationService implements UserDetailsService {
  
         grantList.add(authority);
  
-        boolean enabled = account.isActive();
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
- 
-        UserDetails userDetails = (UserDetails) new User(account.getUserName(), //
-                account.getPassword(), enabled, accountNonExpired, //
-                credentialsNonExpired, accountNonLocked, grantList);
+        UserDetails userDetails = (UserDetails) new User(account.getUsername(), //
+                account.getPassword(), grantList);
  
         return userDetails;
     }

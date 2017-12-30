@@ -78,16 +78,16 @@ public class orderBillDAO {
     }
     
 
-    public static java.util.List getTotalBillMonth(int branchId, int month) {
+    public static java.util.List getTotalBillMonth(int branchId, int month, int year) {
         java.util.List totalBillMonth = new ArrayList();
         totalBillMonth = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             String queryString;
             if (branchId == 0) {
-                queryString = "select count(od.id) as totalBill from OrderBill od where MONTH(od.createdAt) = " + month;
+                queryString = "select count(od.id) as totalBill from OrderBill od where MONTH(od.createdAt) = " + month + "and YEAR(od.createdAt) = " + year;
             } else {
-                queryString = "select count(od.id) as totalBill from OrderBill od where branchId = " + branchId + " and MONTH(od.createdAt) = " + month;
+                queryString = "select count(od.id) as totalBill from OrderBill od where branchId = " + branchId + " and MONTH(od.createdAt) = " + month + "and YEAR(od.createdAt) = " + year;
             }
             Query query = session.createQuery(queryString);
             totalBillMonth = query.list();
@@ -172,17 +172,17 @@ public class orderBillDAO {
         return totalBillOrderYear;
     }
     
-    public static java.util.List getTotalBillOrderTypeMonth(int branchId, int month) {
+    public static java.util.List getTotalBillOrderTypeMonth(int branchId, int month, int year) {
         java.util.List totalBillOrderMonth = new ArrayList();
         totalBillOrderMonth = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         String queryString;
         try {
             if (branchId == 0){
-                queryString = "select orderType, count(orderType) as numOrder from OrderBill where MONTH(createdAt) = "+ month + " group by orderType";
+                queryString = "select orderType, count(orderType) as numOrder from OrderBill where MONTH(createdAt) = "+ month + " and YEAR(createdAt) = " + year + " group by orderType";
             }
             else{
-                queryString = "select orderType, count(orderType) as numOrder from OrderBill where MONTH(createdAt) = "+ month + " and branchId = " + branchId + "group by branchId, orderType";
+                queryString = "select orderType, count(orderType) as numOrder from OrderBill where MONTH(createdAt) = "+ month + "and YEAR(createdAt) = " + year + " and branchId = " + branchId + "group by branchId, orderType";
             }
             
             Query query = session.createQuery(queryString);

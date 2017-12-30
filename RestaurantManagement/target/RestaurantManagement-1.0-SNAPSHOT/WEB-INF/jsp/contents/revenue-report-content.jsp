@@ -1,4 +1,5 @@
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="Entity.Branch"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,8 +16,9 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Home</a>
-        </li>
+        <a href="#">Report management</a>
+    </li>
+    <li class="breadcrumb-item active">Revenue report</li>
     </ol>
     <form action="/RestaurantManagement/revenue-report" method="post">
         <div id="example ">
@@ -86,13 +88,13 @@
                         </div>
                         <div class="mr-5" style="font-size: 20px; color: #18191c">DATE: <%= day%>/<%= month%>/<%= year%> </div>
                     </div>
-                    <%List<Object[]> revenueReportDate = (List<Object[]>) request.getAttribute("revenueReportDate");%>
+                    <%String revenueReportDate = (String) request.getAttribute("revenueReportDate");%>
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
                         <div class="mr-5">REVENUE OF DATE</div>
-                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportDate.toString().substring(1, revenueReportDate.toString().length() - 1)%></div>
+                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportDate %></div>
                     </div>
 
                     <%List<Object[]> numOrderDate = (List<Object[]>) request.getAttribute("numOrderDate");%>
@@ -117,13 +119,13 @@
                         </div>
                         <div class="mr-5" style="font-size: 20px; color: #18191c">MONTH: <%= month%>/<%= year%> </div>
                     </div>
-                    <%List<Object[]> revenueReportMonth = (List<Object[]>) request.getAttribute("revenueReportMonth");%>
+                    <%String revenueReportMonth = (String) request.getAttribute("revenueReportMonth");%>
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
                         <div class="mr-5">REVENUE OF MONTH</div>
-                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportMonth.toString().substring(1, revenueReportMonth.toString().length() - 1)%></div>
+                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportMonth %></div>
                     </div>
                     <%List<Object[]> numOrderMonth = (List<Object[]>) request.getAttribute("numOrderMonth");%>
                     <div class="card-body">
@@ -147,13 +149,13 @@
                         </div>
                         <div class="mr-5" style="font-size: 20px; color: #18191c">YEAR: <%= year%> </div>
                     </div>
-                    <%List<Object[]> revenueReportYear = (List<Object[]>) request.getAttribute("revenueReportYear");%>
+                    <%String revenueReportYear = (String) request.getAttribute("revenueReportYear");%>
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
                         <div class="mr-5">REVENUE OF YEAR</div>
-                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportYear.toString().substring(1, revenueReportYear.toString().length() - 1)%></div>
+                        <div class="mr-5" style="font-weight: bold; font-size: 30px;"><%= revenueReportYear %></div>
                     </div>
                     <%List<Object[]> numOrderYear = (List<Object[]>) request.getAttribute("numOrderYear");%>
                     <div class="card-body">
@@ -174,7 +176,11 @@
 
         </div>
         <br/>
-
+<%List<Object[]> monthlyRevenue = (List<Object[]>) request.getAttribute("monthlyRevenue"); %>
+<%List<Object[]> monthlyOrder = (List<Object[]>) request.getAttribute("monthlyOrder"); %>
+ <%List<Object[]> numOrderTypeYear = (List<Object[]>) request.getAttribute("numOrderTypeYear"); %>
+ <%List<Object[]> numOrderTypeMonth = (List<Object[]>) request.getAttribute("numOrderTypeMonth"); %>
+ <%List<Object[]> numOrderTypeDate = (List<Object[]>) request.getAttribute("numOrderTypeDate"); %>
         <script>
                 window.onload = function () {
 
@@ -182,7 +188,7 @@
                 animationEnabled: true,
                         theme: "light2",
                         title: {
-                        text: "Monthly revenue"
+                        text: "Monthly revenue in <%= year %>"
                         },
                         axisX: {
                         valueFormatString: "MMM"
@@ -206,9 +212,9 @@
                                 xValueFormatString: "MMMM YYYY",
                                 yValueFormatString: "VND #,##0",
                                 dataPoints: [
-            <%List<Object[]> monthlyRevenue = (List<Object[]>) request.getAttribute("monthlyRevenue"); %>
+            
             <% for (Object[] obj : monthlyRevenue) {%>
-                                { x: new Date(2017, <%= (int) obj[0] - 1%>), y: <%=  obj[1]%> },
+                                { x: new Date(<%= year %>, <%= (int) obj[0] - 1%>), y: <%=  obj[1]%> },
             <% }%>
 
                                 ]
@@ -238,7 +244,7 @@
                 animationEnabled: true,
                         theme: "light2",
                         title: {
-                        text: "Monthly total order"
+                        text: "Monthly total order in <%= year %>"
                         },
                         axisX: {
                         valueFormatString: "MMM"
@@ -262,9 +268,9 @@
                                 xValueFormatString: "MMMM YYYY",
                                 yValueFormatString: " #,##0",
                                 dataPoints: [
-            <%List<Object[]> monthlyOrder = (List<Object[]>) request.getAttribute("monthlyOrder"); %>
+            
             <% for (Object[] obj : monthlyOrder) {%>
-                                { x: new Date(2017, <%= (int) obj[0] - 1%>), y: <%=  obj[1]%> },
+                                { x: new Date(<%= year %>, <%= (int) obj[0] - 1%>), y: <%=  obj[1]%> },
             <% }%>
 
                                 ]
@@ -309,7 +315,7 @@
                                 yValueFormatString: "#,##0",
                                 click: explodePie,
                                 dataPoints: [
-            <%List<Object[]> numOrderTypeYear = (List<Object[]>) request.getAttribute("numOrderTypeYear"); %>
+           
             <% for (Object[] obj : numOrderTypeYear) {%>
             <% if ((int) obj[0] == 1) {%>
                                 { y: <%=  obj[1]%>, label: "Store" },
@@ -352,7 +358,7 @@
                                 yValueFormatString: "#,##0",
                                 click: explodePie,
                                 dataPoints: [
-            <%List<Object[]> numOrderTypeMonth = (List<Object[]>) request.getAttribute("numOrderTypeMonth"); %>
+            
             <% for (Object[] obj : numOrderTypeMonth) {%>
             <% if ((int) obj[0] == 1) {%>
                                 { y: <%=  obj[1]%>, label: "Store" },
@@ -394,7 +400,7 @@
                                 yValueFormatString: "#,##0",
                                 click: explodePie,
                                 dataPoints: [
-            <%List<Object[]> numOrderTypeDate = (List<Object[]>) request.getAttribute("numOrderTypeDate"); %>
+            
             <% for (Object[] obj : numOrderTypeDate) {%>
             <% if ((int) obj[0] == 1) {%>
                                 { y: <%=  obj[1]%>, label: "Store" },
@@ -420,51 +426,105 @@
                 }
         </script>
         <br/>
-        <div class="row">
-             <div class="col-xl-6 col-sm-6 mb-6">
-                <div id="chartContainer12MonthOrder" style="height: 250px; width: 100%;">
-                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-                </div>
-            </div>
-            <div class="col-xl-6 col-sm-6 mb-6">
-                <div id="chartContainer12MonthRevenue" style="height: 250px; width: 100%;">
-                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-                </div>
-                <br/><br/>
-            </div>
-           
-        </div>
+       
    
+        <% DecimalFormat formatter = new DecimalFormat("#,###"); %>      
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i>Monthly revenue detail in <%= year %></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>January</th>
+                                <th>February</th>
+                                <th>Match</th>
+                                <th>April</th>
+                                <th>May</th>
+                                <th>June</th>
+                                <th>July</th>
+                                <th>August</th>
+                                <th>September</th>
+                                <th>October</th>
+                                <th>November</th>
+                                <th>December</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-    <div class="card mb-3">
-        <div class="card-header">
-            <i class="fa fa-table"></i>Monthly detail</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Total order </th>
-                            <th>Total revenue</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for (int i=0; i<monthlyRevenue.size(); i++) {%>
-                        <tr>
-                            
-                           
-                           <td>Month <%= monthlyRevenue.get(i)[0] %></td>
-                           <td><%= monthlyOrder.get(i)[1] %></td>
-                           <td><%= monthlyRevenue.get(i)[1] %></td>
-                           
-                        </tr>
-                         <% }%>
-                    </tbody>
-
-                </table>
+                            <tr>
+                                <td><%= formatter.format(monthlyRevenue.get(0)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(1)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(2)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(3)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(4)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(5)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(6)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(7)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(8)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(9)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(10)[1])%></td>
+                                <td><%= formatter.format(monthlyRevenue.get(11)[1])%></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+        <br/><br/>
+        <div id="chartContainer12MonthRevenue" style="height: 250px; width: 100%;">
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
+        <br/><br/><br/><br/>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i>Monthly total order detail in <%= year %></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>January</th>
+                                <th>February</th>
+                                <th>Match</th>
+                                <th>April</th>
+                                <th>May</th>
+                                <th>June</th>
+                                <th>July</th>
+                                <th>August</th>
+                                <th>September</th>
+                                <th>October</th>
+                                <th>November</th>
+                                <th>December</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td><%= formatter.format(monthlyOrder.get(0)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(1)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(2)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(3)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(4)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(5)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(6)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(7)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(8)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(9)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(10)[1]) %></td>
+                                <td><%= formatter.format(monthlyOrder.get(11)[1]) %></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+
+        <div id="chartContainer12MonthOrder" style="height: 250px; width: 100%;">
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
  </form>
 </body>

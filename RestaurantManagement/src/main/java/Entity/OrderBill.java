@@ -1,5 +1,5 @@
 package Entity;
-// Generated Dec 21, 2017 7:10:52 PM by Hibernate Tools 4.3.1
+// Generated Dec 30, 2017 3:24:26 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,7 +12,7 @@ public class OrderBill  implements java.io.Serializable {
 
      private Integer id;
      private int customerId;
-     private int branchId;
+     private Integer branchId;
      private int status;
      private int orderType;
      private double sumMoney;
@@ -22,7 +22,16 @@ public class OrderBill  implements java.io.Serializable {
     public OrderBill() {
     }
 
-    public OrderBill(int customerId, int branchId, int status, int orderType, double sumMoney, Date createdAt, int delFlag) {
+	
+    public OrderBill(int customerId, int status, int orderType, double sumMoney, Date createdAt, int delFlag) {
+        this.customerId = customerId;
+        this.status = status;
+        this.orderType = orderType;
+        this.sumMoney = sumMoney;
+        this.createdAt = createdAt;
+        this.delFlag = delFlag;
+    }
+    public OrderBill(int customerId, Integer branchId, int status, int orderType, double sumMoney, Date createdAt, int delFlag) {
        this.customerId = customerId;
        this.branchId = branchId;
        this.status = status;
@@ -46,11 +55,11 @@ public class OrderBill  implements java.io.Serializable {
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
-    public int getBranchId() {
+    public Integer getBranchId() {
         return this.branchId;
     }
     
-    public void setBranchId(int branchId) {
+    public void setBranchId(Integer branchId) {
         this.branchId = branchId;
     }
     public int getStatus() {

@@ -20,7 +20,7 @@
 <div class="card mb-3">
     <div class="card-header">
         <i class="fa fa-table"></i>Branch list
-        <a href="/RestaurantManagement/new-branch"><button type="button" class="btn btn-primary btn-sm">New branch</button></a>
+        <a href="/RestaurantManagement/new-branch"><button style="float:right" type="button" class="btn btn-primary btn-sm">New branch</button></a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -32,9 +32,8 @@
                         <th>Address</th>
                         <th>Phone</th>
                         <th>Province/City</th>
-                        <th>Table</th>
-                        <th>Created at</th>
-                        <th style="width: 10%">Action</th>
+                        <th class="text-center">Table</th>
+                        <th class="text-center" style="width: 10%">Action</th>
                     </tr>
                 </thead>
                 <% for (Branch b : branch) {%>
@@ -45,7 +44,7 @@
                 <td><%= b.getPhone()%></td>
                 <td><%= b.getProvince()%></td>
                 <td><%= b.getNumTable()%></td>
-                <td><%= b.getCreatedAt()%></td>
+                
                 <td class="text-center">
                      <a href="/RestaurantManagement/edit-branch/<%=b.getId()%>">
                         <button title = "Edit" type="button" class="btn btn-success btn-sm" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>

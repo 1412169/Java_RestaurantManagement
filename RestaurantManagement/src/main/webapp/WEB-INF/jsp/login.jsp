@@ -22,14 +22,14 @@
             <div class="card card-login mx-auto mt-5">
                 <div class="card-header">Login</div>
                 <div class="card-body">
-                    <form>
+                    <form name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="">
+                            <input class="form-control" input type='text' name='username' aria-describedby="emailHelp" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input class="form-control" id="exampleInputPassword1" type="password" placeholder="">
+                            <input class="form-control" type='password' name='password' placeholder="">
                         </div>
                         <div class="form-group">
                             <div class="form-check">

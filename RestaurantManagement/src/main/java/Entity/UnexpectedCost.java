@@ -1,5 +1,5 @@
 package Entity;
-// Generated Dec 21, 2017 7:10:52 PM by Hibernate Tools 4.3.1
+// Generated Dec 30, 2017 3:24:26 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,6 +11,7 @@ public class UnexpectedCost  implements java.io.Serializable {
 
 
      private Integer id;
+     private int branchId;
      private String content;
      private double cost;
      private Date createdAt;
@@ -19,7 +20,8 @@ public class UnexpectedCost  implements java.io.Serializable {
     public UnexpectedCost() {
     }
 
-    public UnexpectedCost(String content, double cost, Date createdAt, int delFlag) {
+    public UnexpectedCost(int branchId, String content, double cost, Date createdAt, int delFlag) {
+       this.branchId = branchId;
        this.content = content;
        this.cost = cost;
        this.createdAt = createdAt;
@@ -32,6 +34,13 @@ public class UnexpectedCost  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
+    }
+    public int getBranchId() {
+        return this.branchId;
+    }
+    
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
     }
     public String getContent() {
         return this.content;

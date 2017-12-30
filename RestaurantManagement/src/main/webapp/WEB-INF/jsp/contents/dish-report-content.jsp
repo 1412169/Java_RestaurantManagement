@@ -14,7 +14,7 @@
     <li class="breadcrumb-item">
         <a href="#">Report management</a>
     </li>
-    <li class="breadcrumb-item active">Revenue report</li>
+    <li class="breadcrumb-item active">Dish report</li>
 </ol>
 <form action="/RestaurantManagement/dish-report" method="post">
     <div class="row">

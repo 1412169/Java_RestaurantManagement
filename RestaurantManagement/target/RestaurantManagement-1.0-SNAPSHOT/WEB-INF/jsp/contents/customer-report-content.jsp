@@ -4,6 +4,7 @@
     Author     : USER
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="Entity.Branch"%>
 <%@page import="Entity.DishDirectory"%>
 <%@page import="java.util.List"%>
@@ -14,7 +15,7 @@
     <li class="breadcrumb-item">
         <a href="#">Report management</a>
     </li>
-    <li class="breadcrumb-item active">Revenue report</li>
+    <li class="breadcrumb-item active">Customer report</li>
 </ol>
 
 <form action="/RestaurantManagement/customer-report" method="post">            
@@ -24,15 +25,6 @@
                 <label style="font-weight: bold">Month</label>
                 <%int month = (int) request.getAttribute("month"); %> 
                 <select class="form-control" name="month">
-                    <% if (month == 0) {%>
-                    <option selected name="month" value="0">---Choose month---</option> 
-                    <% for (int i = 1; i <= 12; i++) {%>
-                    <option name="month" value="<%= i%>">Tháng <%= i%></option> 
-                    <% } %>
-                    <% }%>
-
-
-                    <% if (month != 0) {%>
                     <% for (int i = 1; i <= 12; i++) {%>
                     <% if (i != month) {%>
                     <option name="month" value="<%= i%>">Tháng <%= i%></option> 
@@ -41,7 +33,6 @@
                     <option selected name="month" value="<%= i%>">Tháng <%= i%></option> 
                     <% } %>
                     <% } %>
-                    <% }%>
                 </select>
             </div> 
         </div>
@@ -52,15 +43,6 @@
                 <label style="font-weight: bold">Year</label>
                 <%int year = (int) request.getAttribute("year"); %> 
                 <select class="form-control" name="year">
-                    <% if (year == 0) {%>
-                    <option selected name="year" value="0">---Choose year---</option> 
-                    <% for (Object[] y : yearList) {%> 
-                    <option name="year" value="<%= y[0]%>"><%= y[0]%></option> 
-                    <% } %>
-                    <% }%>
-
-
-                    <% if (year != 0) {%>
                     <% for (Object[] y : yearList) {%> 
                     <% if ((int) y[0] != year) {%>
                     <option name="year" value="<%= y[0]%>"><%= y[0]%></option> 
@@ -69,7 +51,6 @@
                     <option selected name="year" value="<%= y[0]%>"><%= y[0]%></option> 
                     <% } %>
                     <% } %>
-                    <% }%>
                 </select>
             </div> 
         </div>
@@ -81,8 +62,58 @@
             </div>
         </div>
     </div>
+<br/><br/>
+    <%List<Object[]> monthlyCustomer = (List<Object[]>) request.getAttribute("monthlyCustomer"); %>
+        <% DecimalFormat formatter = new DecimalFormat("#,###"); %> 
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i>Monthly detail in <%= year %></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>January</th>
+                                <th>February</th>
+                                <th>Match</th>
+                                <th>April</th>
+                                <th>May</th>
+                                <th>June</th>
+                                <th>July</th>
+                                <th>August</th>
+                                <th>September</th>
+                                <th>October</th>
+                                <th>November</th>
+                                <th>December</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
+                            <tr>
+                                <td><%= formatter.format(monthlyCustomer.get(0)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(1)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(2)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(3)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(4)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(5)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(6)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(7)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(8)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(9)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(10)[1])%></td>
+                                <td><%= formatter.format(monthlyCustomer.get(11)[1])%></td>
+                            </tr>
+                        </tbody>
 
+                    </table>
+                </div>
+            </div>
+        </div>
+                    <br/>        
+<div id="chartContainer" style="height: 250px; width: 100%;">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div>
+                <br/><br/>
     <%List<Object[]> customerBuy = (List<Object[]>) request.getAttribute("customerBuy"); %> 
     <% if (customerBuy != null) { %>
     <!-- Example DataTables Card-->
@@ -118,7 +149,6 @@
 
 </form>
 
-<%int currentYear = (int) request.getAttribute("currentYear");%> 
 <script>
     window.onload = function () {
 
@@ -126,7 +156,7 @@
     animationEnabled: true,
             theme: "light2",
             title: {
-            text: "Monthly customer in <%= currentYear%>"
+            text: "Monthly customer in <%= year %>"
             },
             axisX: {
             valueFormatString: "MMM"
@@ -149,7 +179,7 @@
                     xValueFormatString: "MMMM YYYY",
                     yValueFormatString: "$#,##0",
                     dataPoints: [
-    <%List<Object[]> monthlyCustomer = (List<Object[]>) request.getAttribute("monthlyCustomer"); %>
+
     <% for (Object[] obj : monthlyCustomer) {%>
                     { x: new Date(2017, <%= (int) obj[0] - 1%>), y: <%=  obj[1]%> },
     <% }%>
@@ -178,7 +208,5 @@
     }
 </script>
 <br/><br/>
-<div id="chartContainer" style="height: 370px; width: 100%;">
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-</div>
+
 <br/><br/>

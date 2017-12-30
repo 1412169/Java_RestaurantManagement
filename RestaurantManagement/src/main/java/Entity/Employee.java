@@ -1,5 +1,5 @@
 package Entity;
-// Generated Dec 21, 2017 7:10:52 PM by Hibernate Tools 4.3.1
+// Generated Dec 30, 2017 3:24:26 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,10 +11,12 @@ public class Employee  implements java.io.Serializable {
 
 
      private Integer id;
+     private String username;
+     private String password;
      private String name;
      private String address;
      private String phone;
-     private double salary;
+     private Double salary;
      private String position;
      private Date createdAt;
      private int delFlag;
@@ -22,7 +24,16 @@ public class Employee  implements java.io.Serializable {
     public Employee() {
     }
 
-    public Employee(String name, String address, String phone, double salary, String position, Date createdAt, int delFlag) {
+	
+    public Employee(String username, String password, Date createdAt, int delFlag) {
+        this.username = username;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.delFlag = delFlag;
+    }
+    public Employee(String username, String password, String name, String address, String phone, Double salary, String position, Date createdAt, int delFlag) {
+       this.username = username;
+       this.password = password;
        this.name = name;
        this.address = address;
        this.phone = phone;
@@ -38,6 +49,20 @@ public class Employee  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
+    }
+    public String getUsername() {
+        return this.username;
+    }
+    
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getPassword() {
+        return this.password;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
     }
     public String getName() {
         return this.name;
@@ -60,11 +85,11 @@ public class Employee  implements java.io.Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public double getSalary() {
+    public Double getSalary() {
         return this.salary;
     }
     
-    public void setSalary(double salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
     public String getPosition() {
