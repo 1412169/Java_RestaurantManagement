@@ -77,7 +77,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <input style="margin-top: 30px" class="btn btn-primary" type="submit" value="Search">
-                 <input  style="margin-top: 30px" class="btn btn-primary" type="submit" value="Export CSV">
+                <input  style="margin-top: 30px" class="btn btn-primary" type="submit" value="Export CSV">
             </div>
         </div>
     </div>
@@ -117,3 +117,68 @@
     <% }%>
 
 </form>
+
+<%int currentYear = (int) request.getAttribute("currentYear");%> 
+<script>
+    window.onload = function () {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+            theme: "light2",
+            title: {
+            text: "Monthly customer in <%= currentYear%>"
+            },
+            axisX: {
+            valueFormatString: "MMM"
+            },
+            axisY: {
+            prefix: "$",
+                    labelFormatter: addSymbols
+            },
+            toolTip: {
+            shared: true
+            },
+            legend: {
+            cursor: "pointer",
+                    itemclick: toggleDataSeries
+            },
+            data: [
+            {
+            type: "column",
+                    name: "New customer",
+                    xValueFormatString: "MMMM YYYY",
+                    yValueFormatString: "$#,##0",
+                    dataPoints: [
+    <%List<Object[]> monthlyCustomer = (List<Object[]>) request.getAttribute("monthlyCustomer"); %>
+    <% for (Object[] obj : monthlyCustomer) {%>
+                    { x: new Date(2017, <%= (int) obj[0] - 1%>), y: <%=  obj[1]%> },
+    <% }%>
+                    ]
+            }]
+    });
+    chart.render();
+    function addSymbols(e) {
+    var suffixes = ["", "K", "M", "B"];
+    var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
+    if (order > suffixes.length - 1)
+            order = suffixes.length - 1;
+    var suffix = suffixes[order];
+    return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
+    }
+
+    function toggleDataSeries(e) {
+    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    e.dataSeries.visible = false;
+    } else {
+    e.dataSeries.visible = true;
+    }
+    e.chart.render();
+    }
+
+    }
+</script>
+<br/><br/>
+<div id="chartContainer" style="height: 370px; width: 100%;">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div>
+<br/><br/>

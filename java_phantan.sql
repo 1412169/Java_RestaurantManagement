@@ -22,6 +22,7 @@ del_flag INT not null default 0,
 primary key (id)
 ) ;
 
+
 create table BRANCH (
 id INT not null auto_increment,
 name  NVARCHAR(128) not null,
@@ -34,6 +35,7 @@ del_flag INT not null default 0,
 primary key (id)
 ) ;
 
+
 create table BRANCH_TABLE (
 id INT not null auto_increment,
 branch_id INT not null,
@@ -44,11 +46,10 @@ del_flag INT not null default 0,
 primary key (id)
 ) ;
 
-
 create table ORDER_BILL (
 id INT not null auto_increment,
 customer_id INT not null,
-branch_id INT not null,
+branch_id INT,
 status INT not null,  #1: da thanh toan, 0: chua thanh toan
 order_type  INT not null, ### 1: tai quan, 2: giao di, 3: tong dai
 sum_money DOUBLE not null,
@@ -70,11 +71,13 @@ primary key (id)
 
 create table EMPLOYEE (
 id INT not null auto_increment,
-name NVARCHAR(128) not null,
-address NVARCHAR(128) not null,
-phone  NVARCHAR(128) not null,
-salary DOUBLE not null,
-position NVARCHAR(128) not null, # Thu ngan, Giam doc, Nhan vien don ve sinh, Nhan vien phuc vu
+username NVARCHAR(128) not null,
+password NVARCHAR(128) not null,
+name NVARCHAR(128),
+address NVARCHAR(128),
+phone  NVARCHAR(128),
+salary DOUBLE,
+position NVARCHAR(128), # Thu ngan, Giam doc, Nhan vien don ve sinh, Nhan vien phuc vu
 created_at TIMESTAMP not null default CURRENT_TIMESTAMP(),
 del_flag INT not null default 0,
 primary key (id)
@@ -140,11 +143,11 @@ primary key (id)
 ### select * from branch
 ### drop table branch
 
-insert into branch(name,address, phone, province, num_table) values ('Chi nhanh An Duong Vuong', '271 An Duong Vuong, Phuong 3, Quan 5, Ho Chi Minh' ,'0964626302', 'TP HCM', 10);
-insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Tran Binh Trong','271 Tran Binh Trong, Phuong 3, Quan 5, Ho Chi Minh' ,'0964626302', 'TP HCM', 10);
-insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Nguyen Thi Minh Khai','271 An Duong Vuong, Phuong 3, Quan 1, Ho Chi Minh' ,'0964626302', 'TP HCM', 10);
-insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Le Van Si','271 Le Van Si, Quan Tan Binh, Ho Chi Minh','0964626302', 'TP HCM', 10);
-insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Hung Vuong','271 Hung Vuoung, Phuong 3, Quan 1, Ho Chi Minh','0964626302', 'TP HCM', 10);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh An Duong Vuong', '271 An Duong Vuong, Phuong 3, Quan 5, Ho Chi Minh' ,'0964626302', 'TP HCM', 3);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Tran Binh Trong','271 Tran Binh Trong, Phuong 3, Quan 5, Ho Chi Minh' ,'0964626302', 'TP HCM', 3);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Nguyen Thi Minh Khai','271 An Duong Vuong, Phuong 3, Quan 1, Ho Chi Minh' ,'0964626302', 'TP HCM', 3);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Le Van Si','271 Le Van Si, Quan Tan Binh, Ho Chi Minh','0964626302', 'TP HCM', 3);
+insert into branch(name,address, phone, province, num_table) values ('Chi nhanh Hung Vuong','271 Hung Vuoung, Phuong 3, Quan 1, Ho Chi Minh','0964626302', 'TP HCM', 3);
 
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 1');
 insert into branch_table(branch_id,status,name) values (1, 0, 'Ban 2');
@@ -167,6 +170,7 @@ insert into customer(name,address,phone) values ('Duc Hai', '272/4 An Duong Vuon
 insert into customer(name,address,phone) values ('Anh Tu', '273/4 An Duong Vuong, P3, Q5, HCM', '0964626303');
 insert into customer(name,address,phone) values ('Quoc Trung', '271/4 An Duong Vuong, P3, Q5, HCM', '0964626304');
 insert into customer(name,address,phone) values ('Nguyen Quan', '271/5 An Duong Vuong, P3, Q5, HCM', '0964626305');
+insert into customer(name,address,phone) values ('Thao Dieu', '271/5 An Duong Vuong, P3, Q5, HCM', '0964626305');
 
 insert into dish_directory(name) values ('Do an chay');
 insert into dish_directory(name) values ('Do an man');
@@ -269,12 +273,17 @@ insert into order_bill(customer_id, branch_id, status, order_type, sum_money) va
 insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (3, 3, 0, 2, 25000);
 insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (4, 4, 0, 3, 20000);
 insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (5, 5, 0, 1, 20000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (6, 1, 0, 1, 30000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (6, 2, 0, 2, 55000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (6, 3, 0, 2, 25000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (6, 4, 0, 3, 20000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (6, 5, 0, 1, 20000);
 
-insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 30000);
-insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 55000);
-insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 25000);
-insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 3, 20000);
-insert into order_bill(customer_id, branch_id, status, order_type, sum_money) values (1, 1, 0, 1, 20000);
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money, created_at) values (1, 1, 0, 1, 30000,'2015-12-26');
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money, created_at) values (1, 1, 0, 1, 55000, '2015-12-26');
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money, created_at) values (1, 1, 0, 1, 25000, '2015-12-26');
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money, created_at) values (1, 1, 0, 2, 20000, '2015-12-26');
+insert into order_bill(customer_id, branch_id, status, order_type, sum_money, created_at) values (1, 1, 0, 2, 20000, '2015-12-26');
 
 
 insert into order_detail (order_id, dish_id, quanlity, price) values (1, 1, 1, 30000);
@@ -283,15 +292,14 @@ insert into order_detail (order_id, dish_id, quanlity, price) values (2, 2, 1, 2
 insert into order_detail (order_id, dish_id, quanlity, price) values (3, 11, 1, 25000);
 insert into order_detail (order_id, dish_id, quanlity, price) values (4, 9, 1, 20000);
 insert into order_detail (order_id, dish_id, quanlity, price) values (5, 15, 1, 20000);
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 20000,'2017-11-15');
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-11-15');
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 10000,'2017-10-15');
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-10-15');
-
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 20000,'2017-12-21');
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-12-21');
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 10000,'2017-12-21');
-insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-12-21');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (1, 9, 1, 20000,'2017-11-24');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (1, 15, 1, 20000,'2017-11-24');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (2, 9, 1, 10000,'2017-11-24');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (2, 15, 1, 20000,'2017-11-24');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (3, 9, 1, 20000,'2017-10-23');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (3, 15, 1, 20000,'2017-10-23');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (4, 9, 1, 10000,'2017-10-23');
+insert into order_detail (order_id, dish_id, quanlity, price, created_at) values (5, 15, 1, 20000,'2017-10-23');
 
 insert into table_detail(customer_id, table_id, time) values (1, 1, '');
 insert into table_detail(customer_id, table_id, time) values (5, 2, '');
@@ -303,9 +311,9 @@ insert into unexpected_cost(content, cost) values ('Nhap hang lan 4', 5000000);
 insert into unexpected_cost(content, cost) values ('Nhap hang lan 5', 3000000);
 
 -- ------------------------------------------------------------------
-select *from dish
+select *from branch
 select * from menu
-select * from order_detail
+select * from order_bill
 select SUM(price) from order_detail where
 
 -- get the first date of year
@@ -320,7 +328,7 @@ FROM order_detail
 GROUP BY MONTH(created_at)
 
 -- select ngày hiện tại
-SELECT CURDATE() 
+SELECT DAY(CURDATE()) 
 
 SELECT MONTH(t1.created_at),  SUM(t1.price)
 FROM order_detail as t1
@@ -343,7 +351,7 @@ GROUP BY WEEK(created_at)
 -- doanh thu theo tháng
 SELECT MONTH(order_detail.created_at), SUM(order_detail.price)
 FROM order_detail, order_bill 
-WHERE order_detail.created_at  >= NOW() - INTERVAL 1 YEAR and order_bill.id = order_detail.order_id
+WHERE order_detail.created_at  >= NOW() - INTERVAL 1 YEAR and order_bill.id = order_detail.order_id and order_bill.branch_id = 3
 GROUP BY MONTH(order_detail.created_at)
 
 -- doanh thu theo năm
@@ -368,7 +376,55 @@ FROM order_detail
 WHERE created_at >= NOW() - INTERVAL 1 YEAR 
 GROUP BY WEEK(created_at)
 
-select MONTH(od.createdAt),sum(od.price) as Revenue from OrderDetail od group by MONTH(od.createdAt)
+select MONTH(od.created_At), count(od.id)  from Order_Bill od group by MONTH(od.created_At)
+
 { x: new Date(2016, <%= obj[0] %>), y: <%=  obj[1] %> },
 
 select branch_id, count(order_type) as num_order from order_bill group by branch_id, order_type
+
+select created_at, order_type, count(*) from order_bill where DATE(created_at) = DATE(CURDATE())  group by order_type, created_at
+
+select branch_id, order_type, count(order_type) as numOrder from order_bill where branch_id = 4  group by order_Type, branch_id
+
+select MONTH(ob.created_At),count(ob.id) as totalBill from Order_Bill ob where ob.branch_Id = 4 and YEAR(ob.created_At) = 2017 group by MONTH(ob.created_At)
+
+select  dd.id, dd.name, d.id, d.name , d.price, count(d.id)  
+from dish d, dish_directory dd, order_detail od, order_bill ob 
+where od.order_id = ob.id and  d.dish_directory_id = dd.id and d.id = od.dish_id 
+and YEAR(ob.created_at) = 2017 
+group by d.dish_directory_id, dd.name, d.name, d.id, MONTH(ob.created_at)
+
+and MONTH(ob.created_at) = 12 and ob.branch_id = 4
+
+select * from order_detail
+
+select YEAR(created_at),YEAR(created_at) from order_bill group by YEAR(created_at)
+select * from branch
+
+
+select c.id, c.name, c.phone, count(ob.id), sum(price)
+from customer c, order_bill ob, order_detail od
+where c.id = ob.customer_id and ob.id = od.order_id
+and  DATE(ob.created_at) >= DATE(c.created_at)
+group by c.id, c.name, c.phone
+
+
+select c.id, c.name, c.phone, count(ob.id), sum(price) 
+from customer c, order_bill ob, order_detail od 
+where c.id = ob.customer_id and ob.id = od.order_id 
+and DATE(ob.created_at) >= DATE(c.created_at) 
+group by c.id, c.name, c.phone
+
+
+select order_Type, count(order_Type) as numOrder from Order_Bill od
+where branch_id = 4 and DAY(od.created_At) = 24 and MONTH(od.created_At) = 12 and YEAR(od.created_At) = 2017
+group by order_Type
+
+delete from branch_table where branch_id = 7
+select * from branch_table where branch_id  = 3
+update branch_table set del_flag = 1 where branch_id = 3
+select * from branch
+select SUM(od.price) as sum from Order_Detail od, Order_Bill ob 
+where od.order_Id = ob.id and ob.branch_Id = 4
+and DAY(od.created_At) =  24 and MONTH(od.created_At) = 12 and YEAR(od.created_At) = 2017
+detete from branch

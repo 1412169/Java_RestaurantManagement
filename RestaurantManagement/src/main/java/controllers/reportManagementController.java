@@ -60,7 +60,7 @@ public class reportManagementController {
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH) + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        String string = Integer.toString(month) + "/" + Integer.toString(day) + "/"  + Integer.toString(year);
+        String string = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year);
         List<Object[]> revenueReportMonthly = orderDetailDAO.getRevenueMonthly(0, year);
         List<Object[]> numOrderMonthly = orderBillDAO.getTotalBillMonthly(0, year);
         List<Object[]> revenueReportYear = orderDetailDAO.getRevenueYear(0, year);
@@ -126,7 +126,7 @@ public class reportManagementController {
         int month = Integer.parseInt(parts[0]);
         int day = Integer.parseInt(parts[1]);
         int year = Integer.parseInt(parts[2]);
-        
+
         List<Object[]> revenueReportMonthly = orderDetailDAO.getRevenueMonthly(branchId, year);
         List<Object[]> numOrderMonthly = orderBillDAO.getTotalBillMonthly(branchId, year);
         List<Object[]> revenueReportYear = orderDetailDAO.getRevenueYear(branchId, year);
@@ -291,11 +291,32 @@ public class reportManagementController {
     @RequestMapping(value = "/customer-report", method = RequestMethod.GET)
     public ModelAndView customerReportView(Model model) {
         List<Object[]> yearList = dateTimeDAO.getYear();
-        model.addAttribute("yearList", yearList);
         List<Object[]> customerBuy = customerDAO.getCustomerBuy(0, 0);
+        List<Object[]> customerMontly = customerDAO.getCustomerMonthly(0);
+        List<Object[]> monthlyCustomer = new ArrayList();
+        for (int i = 1; i <= 12; i++) {
+            Object[] temp = new Object[2];
+            temp[0] = i;
+            temp[1] = (double) (0);
+            monthlyCustomer.add(temp);;
+        }
+        for (int i = 1; i <= 12; i++) {
+            for (Object[] obj : customerMontly) {
+                if ((int) obj[0] == i) {
+                    monthlyCustomer.get(i - 1)[1] = obj[1];
+                }
+            }
+        }
+        model.addAttribute("monthlyCustomer", monthlyCustomer);
+        model.addAttribute("yearList", yearList);
         model.addAttribute("customerBuy", customerBuy);
         model.addAttribute("year", 0);
         model.addAttribute("month", 0);
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int currentYear = cal.get(Calendar.YEAR);
+        model.addAttribute("currentYear", currentYear);
         return new ModelAndView("customerReport.jsp");
     }
 
@@ -304,6 +325,8 @@ public class reportManagementController {
         int year = Integer.parseInt(request.getParameterValues("year")[0]);
         int month = Integer.parseInt(request.getParameterValues("month")[0]);
         List<Object[]> yearList = dateTimeDAO.getYear();
+        List<Object[]> customerMontly = customerDAO.getCustomerMonthly(year);
+        model.addAttribute("customerMontly", customerMontly);
         model.addAttribute("yearList", yearList);
         List<Object[]> customerBuy = customerDAO.getCustomerBuy(year, month);
         model.addAttribute("customerBuy", customerBuy);
@@ -312,16 +335,42 @@ public class reportManagementController {
         return new ModelAndView("customerReport.jsp");
     }
 
-    @RequestMapping(value = "/order-report", method = RequestMethod.GET)
-    public ModelAndView orderReportView(HttpServletRequest request, Model model) {
-        List<OrderBill> orderBillList = orderBillDAO.getOrderBillList();
-        model.addAttribute("orderBillList", orderBillList);
-
-        return new ModelAndView("orderReport.jsp");
+//    @RequestMapping(value = "/order-report", method = RequestMethod.GET)
+//    public ModelAndView orderReportView(HttpServletRequest request, Model model) {
+//        List<OrderBill> orderBillList = orderBillDAO.getOrderBillList();
+//        model.addAttribute("orderBillList", orderBillList);
+//        return new ModelAndView("orderReport.jsp");
+//    }
+    @RequestMapping(value = "/cost-report", method = RequestMethod.GET)
+    public ModelAndView costReportView(HttpServletRequest request, Model model) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        List<Branch> branchList = branchDAO.getBranchList();
+        model.addAttribute("branchList", branchList);
+        model.addAttribute("branchId", 0);
+        model.addAttribute("day", day);
+        model.addAttribute("month", month);
+        model.addAttribute("year", year);
+        return new ModelAndView("costReport.jsp");
     }
 
-    @RequestMapping(value = "/cost-report", method = RequestMethod.GET)
+    @RequestMapping(value = "/cost-report", method = RequestMethod.POST)
     public ModelAndView costReportView(HttpServletRequest request) {
+//        int year = Integer.parseInt(request.getParameterValues("year")[0]);
+//        int month = Integer.parseInt(request.getParameterValues("month")[0]);
+//        List<Object[]> yearList = dateTimeDAO.getYear();
+//        List<Object[]> customerMontly = customerDAO.getCustomerMonthly(year);
+//        model.addAttribute("customerMontly", customerMontly);
+//        model.addAttribute("yearList", yearList);
+//        List<Object[]> customerBuy = customerDAO.getCustomerBuy(year, month);
+//        model.addAttribute("customerBuy", customerBuy);
+//        model.addAttribute("year", year);
+//        model.addAttribute("month", month);
         return new ModelAndView("costReport.jsp");
     }
 }

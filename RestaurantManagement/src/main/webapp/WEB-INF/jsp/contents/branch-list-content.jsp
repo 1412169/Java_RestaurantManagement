@@ -52,7 +52,7 @@
                     </a>
                     <!--<button title = "Edit" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>-->
                     <span><button onclick="return confirm_decision(<%=b.getId()%>);" title = "Delete" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button></span>
-                    <a href="/RestaurantManagement/table?branchId=<%=b.getId()%>"><button style ="margin-top: 10px" title= "View table" type="button" class="btn btn-outline-primary btn-sm">View Table</button></a>
+                    <%--<a href="/RestaurantManagement/table/branchId/<%=b.getId()%>"><button style ="margin-top: 10px" title= "View table" type="button" class="btn btn-outline-primary btn-sm">View Table</button></a>--%>
                 </td>
                 <script>
                     function confirm_decision(id) {

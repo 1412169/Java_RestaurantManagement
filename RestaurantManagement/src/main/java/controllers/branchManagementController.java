@@ -125,7 +125,7 @@ public class branchManagementController {
     }
 
     @RequestMapping(value = "/edit-branch/{branchId}", method = RequestMethod.POST)
-    public String editBranch(@PathVariable("branchId") int branchId, HttpServletRequest request,Model model) {
+    public String editBranch(@PathVariable("branchId") int branchId, HttpServletRequest request, Model model) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String name = request.getParameterValues("name")[0];
@@ -135,30 +135,12 @@ public class branchManagementController {
         int numTable = Integer.parseInt(request.getParameterValues("numberTable")[0]);
         String[] menu = request.getParameterValues("menu");
         Branch branchEdit = branchDAO.getBranchInfo(branchId);
-        branchEdit.setName(name);
-        branchEdit.setPhone(phone);
-        branchEdit.setAddress(address);
-        branchEdit.setProvince(province);
-        branchEdit.setNumTable(numTable);
-        branchEdit.setCreatedAt(date);
-        branchEdit.setDelFlag(0);
-        boolean result = branchDAO.updateBranch(branchEdit);
-        if (result == true) {
+
+        if (numTable != branchEdit.getNumTable()) {
             List<BranchTable> branchTableList = branchTableDAO.getBranchTableListByBranchId(branchEdit.getId());
-            List<BranchMenu> branchMenuList = branchMenuDAO.getMenuListByBranchId(branchEdit.getId());
             for (BranchTable bt : branchTableList) {
+                bt.setDelFlag(1);
                 branchTableDAO.deleteBranchTable(bt);
-            }
-            for (BranchMenu bm : branchMenuList) {
-                branchMenuDAO.deleteBranchMenu(bm);
-            }
-            for (String m : menu) {
-                BranchMenu bm = new BranchMenu();
-                bm.setBranchId(branchId);
-                bm.setMenuId(Integer.parseInt(m));
-                bm.setCreatedAt(date);
-                bm.setDelFlag(0);
-                branchMenuDAO.createBranchMenu(bm);
             }
             for (int i = 1; i <= numTable; i++) {
                 BranchTable bt = new BranchTable();
@@ -169,6 +151,29 @@ public class branchManagementController {
                 bt.setDelFlag(0);
                 branchTableDAO.createBranchTable(bt);
             }
+        }
+        List<BranchMenu> branchMenuList = branchMenuDAO.getMenuListByBranchId(branchEdit.getId());
+        for (BranchMenu bm : branchMenuList) {
+            bm.setDelFlag(1);
+            branchMenuDAO.deleteBranchMenu(bm);
+        }
+        for (String m : menu) {
+            BranchMenu bm = new BranchMenu();
+            bm.setBranchId(branchId);
+            bm.setMenuId(Integer.parseInt(m));
+            bm.setCreatedAt(date);
+            bm.setDelFlag(0);
+            branchMenuDAO.createBranchMenu(bm);
+        }
+        branchEdit.setName(name);
+        branchEdit.setPhone(phone);
+        branchEdit.setAddress(address);
+        branchEdit.setProvince(province);
+        branchEdit.setNumTable(numTable);
+        branchEdit.setCreatedAt(date);
+        branchEdit.setDelFlag(0);
+        boolean result = branchDAO.updateBranch(branchEdit);
+        if (result == true) {
             return "redirect:../branch-list";
         } else {
             return "redirect:home";
@@ -177,11 +182,14 @@ public class branchManagementController {
     }
 
     @RequestMapping(value = "/delete-branch", method = RequestMethod.GET)
-    public String editDish(HttpServletRequest request,
-            @RequestParam(value = "branchId", required = true) String branchId, Model model
-    ) {
+    public String editDish(HttpServletRequest request, @RequestParam(value = "branchId", required = true) String branchId, Model model) {
         Branch branch = branchDAO.getBranchInfo(Integer.parseInt(branchId));
         branch.setDelFlag(1);
+        List<BranchTable> listBranchTable = branchTableDAO.getBranchTableListByBranchId(Integer.parseInt(branchId));
+        for (BranchTable bt : listBranchTable) {
+            bt.setDelFlag(1);
+            branchTableDAO.deleteBranchTable(bt);
+        }
         boolean result = branchDAO.deleteBranch(branch);
         if (result == true) {
             return "redirect:branch-list";
@@ -190,24 +198,22 @@ public class branchManagementController {
         }
     }
 
-    @RequestMapping(value = "/table", method = RequestMethod.GET)
-    public ModelAndView tableView(Model model,
-            @RequestParam(value = "branchId", required = true) String branchId
-    ) {
-        List<BranchTable> tableList = tableDAO.getBranchTableByBranchId(Integer.parseInt(branchId));
+    @RequestMapping(value = "/table/branchId/{branchId}", method = RequestMethod.GET)
+    public ModelAndView tableView(Model model, @PathVariable("branchId") int branchId) {
+        List<BranchTable> tableList = tableDAO.getBranchTableByBranchId(branchId);
         model.addAttribute("tableList", tableList);
-        Branch branch = branchDAO.getBranchInfo(Integer.parseInt(branchId));
+        Branch branch = branchDAO.getBranchInfo(branchId);
         model.addAttribute("branch", branch);
         return new ModelAndView("table.jsp");
     }
 
-    @RequestMapping(value = "/table", method = RequestMethod.POST)
+    @RequestMapping(value = "/table/table/branchId{branchId}", method = RequestMethod.POST)
     public ModelAndView tableView(HttpServletRequest request, Model model,
-             @RequestParam(value = "branchId", required = true) String branchId
+            @PathVariable("branchId") int branchId
     ) {
-        List<BranchTable> tableList = tableDAO.getBranchTableByBranchId(Integer.parseInt(branchId));
+        List<BranchTable> tableList = tableDAO.getBranchTableByBranchId(branchId);
         model.addAttribute("tableList", tableList);
-        Branch branch = branchDAO.getBranchInfo(Integer.parseInt(branchId));
+        Branch branch = branchDAO.getBranchInfo(branchId);
         model.addAttribute("branch", branch);
         return new ModelAndView("table.jsp");
     }
