@@ -365,12 +365,6 @@ public class reportManagementController {
         model.addAttribute("customerBuy", customerBuy);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
-//        Date date = new Date();
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(date);
-//        int currentYear = cal.get(Calendar.YEAR);
-//        model.addAttribute("currentYear", currentYear);
-
         return new ModelAndView("customerReport.jsp");
     }
 
@@ -379,10 +373,24 @@ public class reportManagementController {
         int year = Integer.parseInt(request.getParameterValues("year")[0]);
         int month = Integer.parseInt(request.getParameterValues("month")[0]);
         List<Object[]> yearList = dateTimeDAO.getYear();
-        List<Object[]> customerMontly = customerDAO.getCustomerMonthly(year);
-        model.addAttribute("customerMontly", customerMontly);
-        model.addAttribute("yearList", yearList);
         List<Object[]> customerBuy = customerDAO.getCustomerBuy(year, month);
+        List<Object[]> customerMontly = customerDAO.getCustomerMonthly(year);
+        List<Object[]> monthlyCustomer = new ArrayList();
+        for (int i = 1; i <= 12; i++) {
+            Object[] temp = new Object[2];
+            temp[0] = i;
+            temp[1] = (double) (0);
+            monthlyCustomer.add(temp);;
+        }
+        for (int i = 1; i <= 12; i++) {
+            for (Object[] obj : customerMontly) {
+                if ((int) obj[0] == i) {
+                    monthlyCustomer.get(i - 1)[1] = obj[1];
+                }
+            }
+        }
+        model.addAttribute("monthlyCustomer", monthlyCustomer);
+        model.addAttribute("yearList", yearList);
         model.addAttribute("customerBuy", customerBuy);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
