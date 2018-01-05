@@ -72,20 +72,21 @@
                     <li>
                         <a href="/RestaurantManagement/customer-report">Customer report</a>
                     </li>
+                  
                 </ul>
             </li>
         </ul>
-        <ul class="navbar-nav sidenav-toggler">
+<!--        <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">
                 <a class="nav-link text-center" id="sidenavToggler">
                     <i class="fa fa-fw fa-angle-left"></i>
                 </a>
             </li>
-        </ul>
+        </ul>-->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                    <i class="fa fa-fw fa-sign-out"></i>Đăng xuất</a>
+                <a href="" class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out"></i>Log out</a>
             </li>
         </ul>
     </div>

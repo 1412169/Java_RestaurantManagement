@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.sql.Select;
 import org.openqa.selenium.By;
@@ -49,6 +50,10 @@ public class foodManagementController {
 
     @RequestMapping(value = "/food-catalog", method = RequestMethod.GET)
     public String foodCatalogView(HttpServletRequest request, HttpServletResponse response, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
         model.addAttribute("dishDirectoryList", dishDirectoryList);
         List<Dish> dishList = dishDAO.getDishList();
@@ -58,6 +63,10 @@ public class foodManagementController {
 
     @RequestMapping(value = "/new-dish", method = RequestMethod.GET)
     public String foodListView(HttpServletRequest request, HttpServletResponse response, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
         model.addAttribute("dishDirectoryList", dishDirectoryList);
         List<Branch> branchList = branchDAO.getBranchList();
@@ -67,6 +76,10 @@ public class foodManagementController {
 
     @RequestMapping(value = "/new-dish", method = RequestMethod.POST)
     public String createNewDish(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String name = request.getParameterValues("name")[0];
@@ -105,7 +118,11 @@ public class foodManagementController {
     }
 
     @RequestMapping(value = "/edit-dish/{dishId}", method = RequestMethod.GET)
-    public String editDish(@PathVariable("dishId") int dishId, Model model, ModelMap mm) {
+    public String editDish(HttpServletRequest request, @PathVariable("dishId") int dishId, Model model, ModelMap mm) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         Dish dish = dishDAO.getDishInfo(dishId);
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
         List<Branch> branchList = branchDAO.getBranchList();
@@ -114,9 +131,13 @@ public class foodManagementController {
         model.addAttribute("dish", dish);
         return "editDish.jsp";
     }
-    
+
     @RequestMapping(value = "/edit-dish/{dishId}", method = RequestMethod.POST)
-    public String editDish(@PathVariable("dishId") int dishId,HttpServletRequest request, HttpServletResponse response, Model model, ModelMap mm) {
+    public String editDish(@PathVariable("dishId") int dishId, HttpServletRequest request, HttpServletResponse response, Model model, ModelMap mm) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String name = request.getParameterValues("name")[0];
@@ -144,6 +165,10 @@ public class foodManagementController {
 
     @RequestMapping(value = "/delete-dish", method = RequestMethod.GET)
     public String deleteDish(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "dishId", required = true) String dishId, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         Dish dish = dishDAO.getDishInfo(Integer.parseInt(dishId));
         dish.setDelFlag(1);
         boolean result = dishDAO.deleteDish(dish);

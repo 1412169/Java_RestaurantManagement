@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,23 +42,35 @@ import org.springframework.web.servlet.ModelAndView;
 public class branchManagementController {
 
     @RequestMapping(value = "/branch-list", method = RequestMethod.GET)
-    public ModelAndView branchListView(HttpServletRequest request, Model model) {
+    public String branchListView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         List<Branch> branchList = branchDAO.getBranchList();
         model.addAttribute("branchList", branchList);
-        return new ModelAndView("branchList.jsp");
+        return "branchList.jsp";
     }
 
     @RequestMapping(value = "/new-branch", method = RequestMethod.GET)
-    public ModelAndView createBranchView(HttpServletRequest request, Model model) {
+    public String createBranchView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         List<Menu> menuList = menuDAO.getMenuList();
         model.addAttribute("menuList", menuList);
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
         model.addAttribute("dishDirectoryList", dishDirectoryList);
-        return new ModelAndView("newBranch.jsp");
+        return "newBranch.jsp";
     }
 
     @RequestMapping(value = "/new-branch", method = RequestMethod.POST)
     public String createNewBranch(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String name = request.getParameterValues("name")[0];
@@ -99,7 +113,11 @@ public class branchManagementController {
     }
 
     @RequestMapping(value = "/edit-branch/{branchId}", method = RequestMethod.GET)
-    public String editBranch(@PathVariable("branchId") int branchId, Model model, ModelMap mm) {
+    public String editBranch(HttpServletRequest request, @PathVariable("branchId") int branchId, Model model, ModelMap mm) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         List<BranchMenu> branchMenuList = branchMenuDAO.getMenuListByBranchId(branchId);
         Branch branch = branchDAO.getBranchInfo(branchId);
         List<Menu> menuList = menuDAO.getMenuList();
@@ -126,6 +144,10 @@ public class branchManagementController {
 
     @RequestMapping(value = "/edit-branch/{branchId}", method = RequestMethod.POST)
     public String editBranch(@PathVariable("branchId") int branchId, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String name = request.getParameterValues("name")[0];
@@ -183,6 +205,10 @@ public class branchManagementController {
 
     @RequestMapping(value = "/delete-branch", method = RequestMethod.GET)
     public String editDish(HttpServletRequest request, @RequestParam(value = "branchId", required = true) String branchId, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         Branch branch = branchDAO.getBranchInfo(Integer.parseInt(branchId));
         branch.setDelFlag(1);
         List<BranchTable> listBranchTable = branchTableDAO.getBranchTableListByBranchId(Integer.parseInt(branchId));
@@ -199,23 +225,29 @@ public class branchManagementController {
     }
 
     @RequestMapping(value = "/table/branchId/{branchId}", method = RequestMethod.GET)
-    public ModelAndView tableView(Model model, @PathVariable("branchId") int branchId) {
+    public String tableView(HttpServletRequest request, Model model, @PathVariable("branchId") int branchId) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         List<BranchTable> tableList = tableDAO.getBranchTableByBranchId(branchId);
         model.addAttribute("tableList", tableList);
         Branch branch = branchDAO.getBranchInfo(branchId);
         model.addAttribute("branch", branch);
-        return new ModelAndView("table.jsp");
+        return "table.jsp";
     }
 
     @RequestMapping(value = "/table/table/branchId{branchId}", method = RequestMethod.POST)
-    public ModelAndView tableView(HttpServletRequest request, Model model,
-            @PathVariable("branchId") int branchId
-    ) {
+    public String tableView(HttpServletRequest request, HttpServletResponse response, Model model,@PathVariable("branchId") int branchId) {
+          HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         List<BranchTable> tableList = tableDAO.getBranchTableByBranchId(branchId);
         model.addAttribute("tableList", tableList);
         Branch branch = branchDAO.getBranchInfo(branchId);
         model.addAttribute("branch", branch);
-        return new ModelAndView("table.jsp");
+        return "table.jsp";
     }
 
 }

@@ -33,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,15 +49,23 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class reportManagementController {
 
-    @Autowired
+//    @Autowired
 
     @RequestMapping(value = "/general-report", method = RequestMethod.GET)
-    public ModelAndView generalReportView(HttpServletRequest request) {
-        return new ModelAndView("generalReport.jsp");
+    public String generalReportView(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
+        return "generalReport.jsp";
     }
 
     @RequestMapping(value = "/revenue-report", method = RequestMethod.GET)
-    public ModelAndView revenueReportView(Model model) {
+    public String revenueReportView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -143,11 +152,15 @@ public class reportManagementController {
         model.addAttribute("day", day);
         model.addAttribute("month", month);
         model.addAttribute("year", year);
-        return new ModelAndView("revenueReport.jsp");
+        return "revenueReport.jsp";
     }
 
     @RequestMapping(value = "/revenue-report", method = RequestMethod.POST)
-    public ModelAndView revenueReportView(HttpServletRequest request, Model model) throws ParseException {
+    public String revenueReportView(HttpServletResponse response, HttpServletRequest request, Model model) throws ParseException {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         int branchId = Integer.parseInt(request.getParameterValues("branch")[0]);
         String string = request.getParameterValues("date")[0];
         String[] parts = string.split("/");
@@ -229,7 +242,7 @@ public class reportManagementController {
         model.addAttribute("day", day);
         model.addAttribute("month", month);
         model.addAttribute("year", year);
-        return new ModelAndView("revenueReport.jsp");
+        return "revenueReport.jsp";
     }
 
 //    @RequestMapping(value = "/report-revenue/branch/{branchId}", method = RequestMethod.GET)
@@ -292,7 +305,11 @@ public class reportManagementController {
 //        return "reportRevenueBranch.jsp";
 //    }
     @RequestMapping(value = "/dish-report", method = RequestMethod.GET)
-    public ModelAndView dishReportView(HttpServletRequest request, Model model) {
+    public String dishReportView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -311,11 +328,15 @@ public class reportManagementController {
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("branchId", 0);
-        return new ModelAndView("dishReport.jsp");
+        return "dishReport.jsp";
     }
 
     @RequestMapping(value = "/dish-report", method = RequestMethod.POST)
-    public ModelAndView dishReportView(HttpServletRequest request, Model model, HttpServletResponse response) {
+    public String dishReportView(HttpServletRequest request, Model model, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         int branchId = Integer.parseInt(request.getParameterValues("branch")[0]);
         int year = Integer.parseInt(request.getParameterValues("year")[0]);
         int month = Integer.parseInt(request.getParameterValues("month")[0]);
@@ -332,11 +353,15 @@ public class reportManagementController {
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("branchId", branchId);
-        return new ModelAndView("dishReport.jsp");
+        return "dishReport.jsp";
     }
 
     @RequestMapping(value = "/customer-report", method = RequestMethod.GET)
-    public ModelAndView customerReportView(Model model) {
+    public String customerReportView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -365,11 +390,15 @@ public class reportManagementController {
         model.addAttribute("customerBuy", customerBuy);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
-        return new ModelAndView("customerReport.jsp");
+        return "customerReport.jsp";
     }
 
     @RequestMapping(value = "/customer-report", method = RequestMethod.POST)
-    public ModelAndView customerReportView(HttpServletRequest request, Model model) {
+    public String customerReportView(HttpServletResponse response, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         int year = Integer.parseInt(request.getParameterValues("year")[0]);
         int month = Integer.parseInt(request.getParameterValues("month")[0]);
         List<Object[]> yearList = dateTimeDAO.getYear();
@@ -394,12 +423,15 @@ public class reportManagementController {
         model.addAttribute("customerBuy", customerBuy);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
-        return new ModelAndView("customerReport.jsp");
+        return "customerReport.jsp";
     }
 
-
     @RequestMapping(value = "/cost-report", method = RequestMethod.GET)
-    public ModelAndView costReportView(Model model) {
+    public String costReportView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -463,11 +495,15 @@ public class reportManagementController {
         model.addAttribute("month", month);
         model.addAttribute("year", year);
         model.addAttribute("string", string);
-        return new ModelAndView("costReport.jsp");
+        return "costReport.jsp";
     }
 
     @RequestMapping(value = "/cost-report", method = RequestMethod.POST)
-    public ModelAndView costReportView(HttpServletRequest request, Model model) {
+    public String costReportView(HttpServletResponse response,HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null) {
+            return "redirect:403";
+        }
         int branchId = Integer.parseInt(request.getParameterValues("branch")[0]);
         String string = request.getParameterValues("date")[0];
         String[] parts = string.split("/");
@@ -515,7 +551,7 @@ public class reportManagementController {
         } else {
             costDateString = formatter.format(Double.parseDouble(costDate.toString().substring(1, costDate.toString().length() - 1)));
         }
-        
+
         model.addAttribute("monthlyCost", monthlyCost);
         model.addAttribute("costYear", costYearString);
         model.addAttribute("costDate", costDateString);
@@ -528,6 +564,6 @@ public class reportManagementController {
         model.addAttribute("month", month);
         model.addAttribute("year", year);
         model.addAttribute("string", string);
-        return new ModelAndView("costReport.jsp");
+        return "costReport.jsp";
     }
 }

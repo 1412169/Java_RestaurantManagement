@@ -4,9 +4,9 @@ DAO\menuDetailDAO.class
 Entity\Employee.class
 Entity\TableDetail.class
 DAO\branchTableDAO.class
-authentication\MyDBAuthenticationService.class
 DAO\branchMenuDAO.class
 controllers\tableController.class
+Util\Password.class
 controllers\menuController.class
 Entity\DishDirectory.class
 DAO\orderBillDAO.class

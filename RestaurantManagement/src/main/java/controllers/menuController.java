@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,23 +39,35 @@ import org.springframework.web.servlet.ModelAndView;
 public class menuController {
 
     @RequestMapping(value = "/menu-list", method = RequestMethod.GET)
-    public ModelAndView menuListView(HttpServletRequest request, Model model) {
+    public String menuListView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         List<Menu> menuList = menuDAO.getMenuList();
         model.addAttribute("menuList", menuList);
-        return new ModelAndView("menuList.jsp");
+        return "menuList.jsp";
     }
 
     @RequestMapping(value = "/new-menu", method = RequestMethod.GET)
-    public ModelAndView createNewMenu(HttpServletRequest request, Model model) {
+    public String createNewMenu(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
         model.addAttribute("dishDirectoryList", dishDirectoryList);
         List<Dish> dishList = dishDAO.getDishList();
         model.addAttribute("dishList", dishList);
-        return new ModelAndView("newMenu.jsp");
+        return "newMenu.jsp";
     }
 
     @RequestMapping(value = "/new-menu", method = RequestMethod.POST)
     public String createNewMenu(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String name = request.getParameterValues("name")[0];
@@ -78,7 +91,11 @@ public class menuController {
     }
 
     @RequestMapping(value = "/menu/{menuId}/add-dish", method = RequestMethod.GET)
-    public ModelAndView editMenu(@PathVariable("menuId") int menuId, HttpServletRequest request, Model model) {
+    public String editMenu(@PathVariable("menuId") int menuId, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         List<DishDirectory> dishDirectoryList = dishDirectoryDAO.getDishDirectoryList();
         Menu menu = menuDAO.getMenuInfo(menuId);
         List<MenuDetail> menuDetailList = menuDetailDAO.getMenuDetailListByMenuId(menuId);
@@ -100,11 +117,15 @@ public class menuController {
         model.addAttribute("dishDirectoryList", dishDirectoryList);
         model.addAttribute("chosenDishList", chosenDishList);
         model.addAttribute("notChosenDishList", notChosenDishList);
-        return new ModelAndView("addMenuDish.jsp");
+        return "addMenuDish.jsp";
     }
 
     @RequestMapping(value = "/menu/{menuId}/add-dish", method = RequestMethod.POST)
     public String editMenu(@PathVariable("menuId") int menuId, HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String[] dishList = request.getParameterValues("dishList");
@@ -119,18 +140,26 @@ public class menuController {
     }
 
     @RequestMapping(value = "/detail-menu/{menuId}", method = RequestMethod.GET)
-    public ModelAndView detailMenu(@PathVariable("menuId") int menuId, HttpServletRequest request, Model model) {
+    public String detailMenu(@PathVariable("menuId") int menuId, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         Menu menu = menuDAO.getMenuInfo(menuId);
         List<MenuDetail> menuDetailList = menuDetailDAO.getMenuDetailListByMenuId(menuId);
         List<Dish> dishList = dishDAO.getDishList();
         model.addAttribute("menu", menu);
         model.addAttribute("menuDetailList", menuDetailList);
         model.addAttribute("dishList", dishList);
-        return new ModelAndView("detailMenu.jsp");
+        return "detailMenu.jsp";
     }
 
     @RequestMapping(value = "/delete-menu", method = RequestMethod.GET)
     public String deleteDish(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "menuId", required = true) String menuId, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         Menu menu = menuDAO.getMenuInfo(Integer.parseInt(menuId));
         menu.setDelFlag(1);
         boolean result = menuDAO.deleteMenu(menu);
@@ -143,6 +172,10 @@ public class menuController {
 
     @RequestMapping(value = "menu/{menuId}/delete-menu-detail", method = RequestMethod.GET)
     public String deleteMenuDetail(@PathVariable("menuId") int menuId, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "menuDetailId", required = true) String menuDetailId, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("user") == null){
+            return "redirect:403";
+        }
         MenuDetail menuDetail = menuDetailDAO.getMenuDetailInfo(Integer.parseInt(menuDetailId));
         menuDetail.setDelFlag(1);
         boolean result = menuDetailDAO.deleteMenuDetail(menuDetail);
