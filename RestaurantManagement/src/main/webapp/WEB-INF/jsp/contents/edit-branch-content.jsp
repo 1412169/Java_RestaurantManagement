@@ -36,7 +36,7 @@
                 <label style="font-weight: bold">Branch name</label>
                 <spring:nestedPath path="name">
                     <spring:bind path="value">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="name" value="<%=branch.getName()%>">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="name" value="<%=branch.getName()%>">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -44,7 +44,7 @@
                 <label style="font-weight: bold">Phone</label>
                 <spring:nestedPath path="phone">
                     <spring:bind path="value">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="phone" value="<%=branch.getPhone()%>">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="phone" value="<%=branch.getPhone()%>">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -52,7 +52,7 @@
                 <label style="font-weight: bold">City/Province</label>
                 <spring:nestedPath path="province">
                     <spring:bind path="value">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="province" value="<%=branch.getProvince()%>">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="province" value="<%=branch.getProvince()%>">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -60,7 +60,7 @@
                 <label style="font-weight: bold">Number table</label>
                 <spring:nestedPath path="numberTable">
                     <spring:bind path="value">
-                        <input type="number" class="form-control" id="exampleFormControlInput1" name="numberTable" value="<%=branch.getNumTable()%>"> <span></span>
+                        <input required type="number" class="form-control" id="exampleFormControlInput1" name="numberTable" value="<%=branch.getNumTable()%>"> <span></span>
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -68,7 +68,7 @@
                 <label style="font-weight: bold">Address</label>
                 <spring:nestedPath path="address">
                     <spring:bind path="value">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address"><%=branch.getAddress()%></textarea>
+                        <textarea required class="form-control" id="exampleFormControlTextarea1" rows="3" name="address"><%=branch.getAddress()%></textarea>
                     </spring:bind>
                 </spring:nestedPath>
             </div>

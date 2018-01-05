@@ -25,7 +25,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label style="font-weight: bold">Menu name</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="name">
+                <input required type="text" class="form-control" id="exampleFormControlInput1" name="name">
 
             </div>
         </div>

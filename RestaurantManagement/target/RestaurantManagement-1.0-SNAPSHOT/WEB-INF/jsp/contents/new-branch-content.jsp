@@ -34,7 +34,7 @@
                 <label style="font-weight: bold">Branch name</label>
                 <spring:nestedPath path="name">
                     <spring:bind path="value">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="name">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="name">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -42,7 +42,7 @@
                 <label style="font-weight: bold">Phone</label>
                 <spring:nestedPath path="phone">
                     <spring:bind path="value">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="phone">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="phone">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -50,7 +50,7 @@
                 <label style="font-weight: bold">City/Province</label>
                 <spring:nestedPath path="province">
                     <spring:bind path="value">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="province">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="province">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -58,7 +58,7 @@
                 <label style="font-weight: bold">Number table</label>
                 <spring:nestedPath path="numberTable">
                     <spring:bind path="value">
-                        <input type="number" class="form-control" id="exampleFormControlInput1" name="numberTable"> <span></span>
+                        <input required type="number" class="form-control" id="exampleFormControlInput1" name="numberTable"> <span></span>
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -66,7 +66,7 @@
                 <label style="font-weight: bold">Address</label>
                 <spring:nestedPath path="address">
                     <spring:bind path="value">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address"></textarea>
+                        <textarea required class="form-control" id="exampleFormControlTextarea1" rows="3" name="address"></textarea>
                     </spring:bind>
                 </spring:nestedPath>
             </div>

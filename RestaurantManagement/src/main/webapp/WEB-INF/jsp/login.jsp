@@ -26,14 +26,14 @@
                     <%--<form name='f' action="${pageContext.request.contextPath}/j_spring_security_check"  method='POST'>--%>
                     <form action="/RestaurantManagement/login" method="post">
                         <%String message = (String) request.getAttribute("message"); %>
-                        <%= message %>
+                        <span style="color: red; text-align: center"> <%= message %> </span>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input class="form-control" input type='text' name='username' aria-describedby="emailHelp" placeholder="">
+                            <input required class="form-control" input type='text' name='username' aria-describedby="emailHelp" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input class="form-control" type='password' name='password' placeholder="">
+                            <input required class="form-control" type='password' name='password' placeholder="">
                         </div>
                         <div class="form-group text-center">
                             <input class="btn btn-primary btn-block" type="submit" value="Login">

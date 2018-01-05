@@ -26,7 +26,7 @@
                 <label style="font-weight: bold">Dish name</label>
                 <spring:nestedPath path="name">
                     <spring:bind path="value">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="name" value="<%= dish.getName()%>">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="name" value="<%= dish.getName()%>">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -34,7 +34,7 @@
                 <label style="font-weight: bold">Price</label>
                 <spring:nestedPath path="price">
                     <spring:bind path="value">
-                        <input type="number" class="form-control" id="exampleFormControlInput1" name="price" value="<%= dish.getPrice()%>">
+                        <input required type="number" class="form-control" id="exampleFormControlInput1" name="price" value="<%= dish.getPrice()%>">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -42,7 +42,7 @@
                 <label style="font-weight: bold">Description</label>
                 <spring:nestedPath path="description">
                     <spring:bind path="value">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"><%= dish.getDescription()%></textarea>
+                        <textarea required class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"><%= dish.getDescription()%></textarea>
                     </spring:bind>
                 </spring:nestedPath>
 

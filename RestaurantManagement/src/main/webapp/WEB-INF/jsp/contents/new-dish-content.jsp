@@ -25,7 +25,7 @@
                 <label style="font-weight: bold">Dish name</label>
 <!--                <spring:nestedPath path="name">
                     <spring:bind path="value">-->
-                        <input type="text" class="form-control" id="exampleFormControlInput1" name="name">
+                        <input required type="text" class="form-control" id="exampleFormControlInput1" name="name">
 <!--                    </spring:bind>
                 </spring:nestedPath>-->
             </div>
@@ -33,7 +33,7 @@
                 <label style="font-weight: bold">Price</label>
                 <spring:nestedPath path="price">
                     <spring:bind path="value">
-                        <input type="number" class="form-control" id="exampleFormControlInput1" name="price">
+                        <input required type="number" class="form-control" id="exampleFormControlInput1" name="price">
                     </spring:bind>
                 </spring:nestedPath>
             </div>
@@ -41,7 +41,7 @@
                 <label style="font-weight: bold">Description</label>
                 <spring:nestedPath path="description">
                     <spring:bind path="value">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+                        <textarea required class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
                     </spring:bind>
                 </spring:nestedPath>
 
@@ -69,7 +69,7 @@
                 <label style="font-weight: bold">Choose image</label>
                 <spring:nestedPath path="img">
                     <spring:bind path="value">
-                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="img">
+                        <input required type="file" class="form-control-file" id="exampleFormControlFile1" name="img">
                     </spring:bind>
                 </spring:nestedPath> 
             </div>
