@@ -26,14 +26,14 @@
 <%Menu menu = (Menu) request.getAttribute("menu");%> 
 
 <form action="/RestaurantManagement/menu/<%=menu.getId()%>/add-dish" method="post">
-    <div class="card-header">  
+     <div class="card-header">  
         <i class=""></i>Menu <strong><%=menu.getMenuName()%></strong>
-        <input style="float:right" class="btn btn-primary btn-lg btn-sm" type="submit" value="Confirm adding chosen dish to menu">
+        <input required style="float:right" class="btn btn-primary btn-lg btn-sm" type="submit" value="Confirm adding chosen dish to menu">
     </div>
-    <br/>
-    <!--    <div class="form-group text-center">
-            
-        </div>-->
+        <br/>
+<!--    <div class="form-group text-center">
+        
+    </div>-->
     <% for (DishDirectory dd : dishDirectory) {%> 
     <div class="card mb-3">
         <div class="card-header">  

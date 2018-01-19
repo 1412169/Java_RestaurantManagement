@@ -16,14 +16,15 @@ import org.hibernate.Session;
  */
 public class employeeDAO {
 
-//    public Employee findAccount(String username) {
-//          Session session = HibernateUtil.getSessionFactory().openSession();
-//        String sql = "Select * from EMPLOYEE Where username = :username";
-//        Query query = session.createQuery(sql);
-//        query.setParameter("username", username);
-//        Employee e = (Employee)query.list().get(0);
-//        return e;
-//    }
+    public Employee findAccount(String username) {
+          Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "Select * from EMPLOYEE Where username = :username";
+        Query query = session.createQuery(sql);
+        query.setParameter("username", username);
+        Employee e = (Employee)query.list().get(0);
+        return e;
+    }
+    
     
      public static Employee getEmployeeByUsername(String username) {
         Employee user = null;

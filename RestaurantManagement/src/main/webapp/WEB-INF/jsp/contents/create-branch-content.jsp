@@ -21,23 +21,23 @@
         <form>
             <div class="form-group">
                 <label for="branchNameInput">Tên chi nhánh </label>
-                <input required class="form-control" id="branchNameInput" type="text" aria-describedby="...">
+                <input class="form-control" id="branchNameInput" type="text" aria-describedby="...">
             </div>
             <div class="form-group">
                 <label for="branchAddressInput">Địa chỉ</label>
-                <input required class="form-control" id="branchAddressInput" type="text">
+                <input class="form-control" id="branchAddressInput" type="text">
             </div>
             <div class="form-group">
                 <label for="branchPhoneInput">Số điện thoại</label>
-                <input required class="form-control" id="branchPhoneInput" type="text">
+                <input class="form-control" id="branchPhoneInput" type="text">
             </div>
             <div class="form-group">
                 <label for="branchAreaInput">Tỉnh / Thành phố</label>
-                <input required class="form-control" id="branchAreaInput" type="text">
+                <input class="form-control" id="branchAreaInput" type="text">
             </div>
             <div class="form-group">
                 <label for="branchTableCountInput">Số lượng bàn</label>
-                <input required class="form-control" id="branchTableCountInput" type="number">
+                <input class="form-control" id="branchTableCountInput" type="number">
             </div>
             <a class="btn btn-primary btn-block" href="/RestaurantManagement/home">Thêm</a>
         </form>

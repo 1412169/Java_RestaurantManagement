@@ -63,17 +63,12 @@ public class accountController {
     public String logoutView(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
         session.invalidate();
-        return "redirect:login";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String errorAccessPage(HttpServletRequest request) {
         return "403.jsp";
     }
-    
-//    @Autowired
-//    @RequestMapping(value = "/403", method = RequestMethod.GET)
-//    public ModelAndView errorAccessPage() {
-//        return new ModelAndView("403.jsp");
-//    }
+   
 }

@@ -5,7 +5,6 @@
 --%>
 
 
-<%@page import="java.lang.String"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -23,22 +22,25 @@
             <div class="card card-login mx-auto mt-5">
                 <div class="card-header">Login</div>
                 <div class="card-body">
-                    <%--<form name='f' action="${pageContext.request.contextPath}/j_spring_security_check"  method='POST'>--%>
-                    <form action="/RestaurantManagement/login" method="post">
-                        <%String message = (String) request.getAttribute("message"); %>
-                        <span style="color: red; text-align: center"> <%= message %> </span>
+                    <form name='f' action="/RestaurantManagement/login" method='POST'>
+                        <%String message = (String) request.getAttribute("message");%>
+                        <span style="color: red; text-align: center"> <%= message%> </span>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input required class="form-control" input type='text' name='username' aria-describedby="emailHelp" placeholder="">
+                            <input class="form-control" input type='text' name='username' aria-describedby="emailHelp" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input required class="form-control" type='password' name='password' placeholder="">
+                            <input class="form-control" type='password' name='password' placeholder="">
                         </div>
-                        <div class="form-group text-center">
-                            <input class="btn btn-primary btn-block" type="submit" value="Login">
-                        </div>
+                        
+                        <!--<a class="btn btn-primary btn-block" href="/RestaurantManagement/home">Login</a>-->
+                        <input class="btn btn-primary btn-block" type="submit" value="Login">
                     </form>
+                    <!--                    <div class="text-center">
+                                            <a class="d-block small mt-3" href="register.html">Register an Account</a>
+                                            <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+                                        </div>-->
                 </div>
             </div>
         </div>

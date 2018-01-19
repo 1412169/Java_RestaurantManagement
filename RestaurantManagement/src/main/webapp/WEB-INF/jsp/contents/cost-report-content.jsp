@@ -42,13 +42,14 @@
                         <select class="form-control" name="branch">
 
                             <% if (branchId == 0) {%>
-                            <option selected name="branch" value="0">---Choose branch---</option>
+                            <option selected name="branch" value="0">---All branch---</option>
                             <% for (Branch b : branch) {%> 
                             <option name="branch" value="<%= b.getId()%>"><%= b.getName()%></option> 
                             <% } %>
                             <% } %>
 
                             <% if (branchId != 0) {%>
+                            <option selected name="branch" value="0">---All branch---</option>
                             <% for (Branch b : branch) {%> 
                             <% if (b.getId() == branchId) {%>
                             <option selected name="branch" value="<%= b.getId()%>"><%= b.getName()%></option> 

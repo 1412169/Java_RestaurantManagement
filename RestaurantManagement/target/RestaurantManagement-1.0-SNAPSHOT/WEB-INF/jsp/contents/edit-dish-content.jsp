@@ -73,7 +73,7 @@
                 <label style="font-weight: bold">Choose image</label>
                 <spring:nestedPath path="img">
                     <spring:bind path="value">
-                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="img" value="<%=dish.getImgUrl()%>">
+                        <input required type="file" class="form-control-file" id="exampleFormControlFile1" name="img" value="<%=dish.getImgUrl()%>">
                         <%=dish.getImgUrl()%>
                     </spring:bind>
                 </spring:nestedPath> 
